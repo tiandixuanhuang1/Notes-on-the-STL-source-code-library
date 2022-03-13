@@ -80,7 +80,7 @@
  */
 
 /*
-1£¬Ö¸ÕëÏà¼õ = £¨µØÖ·1 - µØÖ·2£©/sizeof(ÀàĞÍ) 
+1ï¼ŒæŒ‡é’ˆç›¸å‡ = ï¼ˆåœ°å€1 - åœ°å€2ï¼‰/sizeof(ç±»å‹) 
 */
 
 
@@ -93,69 +93,69 @@ __STL_BEGIN_NAMESPACE
 
 // Note: this function is simply a kludge to work around several compilers'
 //  bugs in handling constant expressions.
-//×¢Òâ£ºÕâ¸öº¯ÊıÖ»ÊÇÎªÁË½â¾ö¼¸¸ö±àÒëÆ÷ÔÚ´¦Àí³£Á¿±í´ïÊ½Ê±³öÏÖµÄ´íÎó¶ø×öµÄÒ»¸öĞ¡¶¯×÷¡£
+//æ³¨æ„ï¼šè¿™ä¸ªå‡½æ•°åªæ˜¯ä¸ºäº†è§£å†³å‡ ä¸ªç¼–è¯‘å™¨åœ¨å¤„ç†å¸¸é‡è¡¨è¾¾å¼æ—¶å‡ºç°çš„é”™è¯¯è€Œåšçš„ä¸€ä¸ªå°åŠ¨ä½œã€‚
 inline size_t __deque_buf_size(size_t n, size_t sz)
 {
   return n != 0 ? n : (sz < 512 ? size_t(512 / sz) : size_t(1));
-  // Èô n Îª 0 ÇÒÔªËØ´óĞ¡szĞ¡ÓÚ 512£¬Ôòsize_t = 512/sz
-  // Èô n Îª 0 ÇÒÔªËØ´óĞ¡sz´óÓÚ 512£¬Ôòsize_t 1
-  // Èô n ²»Îª 0£¬Ôò¾ÍÎª n 
+  // è‹¥ n ä¸º 0 ä¸”å…ƒç´ å¤§å°szå°äº 512ï¼Œåˆ™size_t = 512/sz
+  // è‹¥ n ä¸º 0 ä¸”å…ƒç´ å¤§å°szå¤§äº 512ï¼Œåˆ™size_t 1
+  // è‹¥ n ä¸ä¸º 0ï¼Œåˆ™å°±ä¸º n 
 }
 
-#ifndef __STL_NON_TYPE_TMPL_PARAM_BUG                                                                                                           // ·ÀÖ¹ÓĞbug ??
+#ifndef __STL_NON_TYPE_TMPL_PARAM_BUG                                                                                                           // é˜²æ­¢æœ‰bug ??
 template <class T, class Ref, class Ptr, size_t BufSiz>
 struct __deque_iterator {                                                     
   typedef __deque_iterator<T, T&, T*, BufSiz>             iterator;
   typedef __deque_iterator<T, const T&, const T*, BufSiz> const_iterator;
-  static size_t buffer_size() {return __deque_buf_size(BufSiz, sizeof(T)); } // ¾²Ì¬±äÁ¿  µÃµ½»º³åÇøµÄ´óĞ¡¡£ 
+  static size_t buffer_size() {return __deque_buf_size(BufSiz, sizeof(T)); } // é™æ€å˜é‡  å¾—åˆ°ç¼“å†²åŒºçš„å¤§å°ã€‚ 
 #else /* __STL_NON_TYPE_TMPL_PARAM_BUG */
 
 template <class T, class Ref, class Ptr>
-struct __deque_iterator {                                              // ***¹ØÓÚdeque µÄµü´úÆ÷ 
+struct __deque_iterator {                                              // ***å…³äºdeque çš„è¿­ä»£å™¨ 
   typedef __deque_iterator<T, T&, T*>             iterator;
   typedef __deque_iterator<T, const T&, const T*> const_iterator;
-  static size_t buffer_size() {return __deque_buf_size(0, sizeof(T)); }// »º³åÇøµÄ´óĞ¡ buffer_size() ÊÇÒ»¸ö¾²Ì¬º¯Êı¡£ 
+  static size_t buffer_size() {return __deque_buf_size(0, sizeof(T)); }// ç¼“å†²åŒºçš„å¤§å° buffer_size() æ˜¯ä¸€ä¸ªé™æ€å‡½æ•°ã€‚ 
 #endif
 
-  typedef random_access_iterator_tag iterator_category; // (1)µü´úÆ÷ÀàĞÍ dequeÎª random_access_iterator_tag 
-  typedef T value_type;                                 // (2) Êı¾İÀàĞÍ 
-  typedef Ptr pointer;                                  // (3) Ö¸Õë 
-  typedef Ref reference;                                // (4) ÒıÓÃ 
+  typedef random_access_iterator_tag iterator_category; // (1)è¿­ä»£å™¨ç±»å‹ dequeä¸º random_access_iterator_tag 
+  typedef T value_type;                                 // (2) æ•°æ®ç±»å‹ 
+  typedef Ptr pointer;                                  // (3) æŒ‡é’ˆ 
+  typedef Ref reference;                                // (4) å¼•ç”¨ 
   typedef size_t size_type;                        
-  typedef ptrdiff_t difference_type;                    // (5)  ¾àÀë 
-  typedef T** map_pointer;                              // Ö¸ÕëµÄÖ¸Õë 
+  typedef ptrdiff_t difference_type;                    // (5)  è·ç¦» 
+  typedef T** map_pointer;                              // æŒ‡é’ˆçš„æŒ‡é’ˆ 
 
-  typedef __deque_iterator self;                                                                                                                  // __deque_iterator ÎªÊ²Ã´²»´øÄ£°å 
+  typedef __deque_iterator self;                                                                                                                  // __deque_iterator ä¸ºä»€ä¹ˆä¸å¸¦æ¨¡æ¿ 
 
-  T* cur;                                               // µü´úÆ÷ÖĞµÄÊı¾İ  cur Îªµ±Ç°µÄÎ»ÖÃ£¬first Îªµ±Ç°bufferµÄÍ·²¿£¬last Îªµ±Ç°bufferµÄÎ²²¿£¬map_pointerÎª±¾buffer¿ØÖÆÖĞĞÄµÄÎ»ÖÃ 
+  T* cur;                                               // è¿­ä»£å™¨ä¸­çš„æ•°æ®  cur ä¸ºå½“å‰çš„ä½ç½®ï¼Œfirst ä¸ºå½“å‰bufferçš„å¤´éƒ¨ï¼Œlast ä¸ºå½“å‰bufferçš„å°¾éƒ¨ï¼Œmap_pointerä¸ºæœ¬bufferæ§åˆ¶ä¸­å¿ƒçš„ä½ç½® 
   T* first;
   T* last;
   map_pointer node;
-  /* nodeÖ¸Ïò¿ØÖÆÖĞĞÄÖĞÒ»¸ö½ÚµãµÄÖ´Õş£¬¿ØÖÆÖĞĞÄÎªÒ»
-  ¸öÔªËØÎªÖ¸ÕëµÄ vector£¬nodeÎªÒ»¸öÖ¸ÏòÖ¸ÕëµÄÖ¸Õë */
+  /* nodeæŒ‡å‘æ§åˆ¶ä¸­å¿ƒä¸­ä¸€ä¸ªèŠ‚ç‚¹çš„æ‰§æ”¿ï¼Œæ§åˆ¶ä¸­å¿ƒä¸ºä¸€
+  ä¸ªå…ƒç´ ä¸ºæŒ‡é’ˆçš„ vectorï¼Œnodeä¸ºä¸€ä¸ªæŒ‡å‘æŒ‡é’ˆçš„æŒ‡é’ˆ */
 
-  __deque_iterator(T* x, map_pointer y)                     // ÓĞ²Î¹¹Ôìº¯Êı£¬Êı¾İÎª x£¨curÎªÖ¸ÏòxµÄÖ¸Õë£©£¬firstÎª *y£¨T*£©£¬lastÎª *y + buffer_size()£¬nodeÎª y£¨T**£© 
+  __deque_iterator(T* x, map_pointer y)                     // æœ‰å‚æ„é€ å‡½æ•°ï¼Œæ•°æ®ä¸º xï¼ˆcurä¸ºæŒ‡å‘xçš„æŒ‡é’ˆï¼‰ï¼Œfirstä¸º *yï¼ˆT*ï¼‰ï¼Œlastä¸º *y + buffer_size()ï¼Œnodeä¸º yï¼ˆT**ï¼‰ 
     : cur(x), first(*y), last(*y + buffer_size()), node(y) {}
     
-  __deque_iterator() : cur(0), first(0), last(0), node(0) {}//Ä¬ÈÏ¹¹Ôì 
+  __deque_iterator() : cur(0), first(0), last(0), node(0) {}//é»˜è®¤æ„é€  
   
-  __deque_iterator(const iterator& x)                       // ¿½±´¹¹Ôìº¯Êı 
+  __deque_iterator(const iterator& x)                       // æ‹·è´æ„é€ å‡½æ•° 
     : cur(x.cur), first(x.first), last(x.last), node(x.node) {}
 
-  reference operator*() const { return *cur; }              // ½âÒıÓÃ reference = Ref£¨Ò»°ãÓ¦¸ÃÎª T&£© 
+  reference operator*() const { return *cur; }              // è§£å¼•ç”¨ reference = Refï¼ˆä¸€èˆ¬åº”è¯¥ä¸º T&ï¼‰ 
 #ifndef __SGI_STL_NO_ARROW_OPERATOR
-  pointer operator->() const { return &(operator*()); }     // ·µ»Ø *curµÄµØÖ· 
+  pointer operator->() const { return &(operator*()); }     // è¿”å› *curçš„åœ°å€ 
 #endif /* __SGI_STL_NO_ARROW_OPERATOR */
 
-  difference_type operator-(const self& x) const {          // ÖØÔØº¯Êı -£¨µü´úÆ÷µÄ¼õ·¨£©£¬self = __deque_iterator £¬ÈÏÎª x ÔÚ ËùÖ¸ÔªËØµÄÇ°±ß¡£
+  difference_type operator-(const self& x) const {          // é‡è½½å‡½æ•° -ï¼ˆè¿­ä»£å™¨çš„å‡æ³•ï¼‰ï¼Œself = __deque_iterator ï¼Œè®¤ä¸º x åœ¨ æ‰€æŒ‡å…ƒç´ çš„å‰è¾¹ã€‚
     return difference_type(buffer_size()) * (node - x.node - 1) +
       (cur - first) + (x.last - x.cur);
   }
 
-  self& operator++() {                                     //self = __deque_iterator£¬++ ÎªcurÖ¸ÏòµÄÎ»ÖÃ±ä»» 
-     // ÇĞ»»ÏÂÒ»¸öÔªËØ
-	 // Èç¹ûµÖ´ï»º³åÇøÎ²¶Ë
-	 //¾ÍÌø×ªÖÁÏÂÒ»¸ö node(»º³åÇø)µÄÆğµã 
+  self& operator++() {                                     //self = __deque_iteratorï¼Œ++ ä¸ºcuræŒ‡å‘çš„ä½ç½®å˜æ¢ 
+     // åˆ‡æ¢ä¸‹ä¸€ä¸ªå…ƒç´ 
+	 // å¦‚æœæŠµè¾¾ç¼“å†²åŒºå°¾ç«¯
+	 //å°±è·³è½¬è‡³ä¸‹ä¸€ä¸ª node(ç¼“å†²åŒº)çš„èµ·ç‚¹ 
     ++cur;
     if (cur == last) {
       set_node(node + 1);                                                                                                                        // set_node()  
@@ -185,45 +185,45 @@ struct __deque_iterator {                                              // ***¹ØÓ
     return tmp;
   }
 
-  self& operator+=(difference_type n) {              // += ÖØÔØ 
+  self& operator+=(difference_type n) {              // += é‡è½½ 
     difference_type offset = n + (cur - first);
     if (offset >= 0 && offset < difference_type(buffer_size()))
-    	//Ä¿±êÎ»ÖÃÔÚÍ¬Ò»¸ö»º³åÇø 
+    	//ç›®æ ‡ä½ç½®åœ¨åŒä¸€ä¸ªç¼“å†²åŒº 
       cur += n;
-    else { // Ä¿±êÇøÓò²»ÔÚ»º³åÇø 
+    else { // ç›®æ ‡åŒºåŸŸä¸åœ¨ç¼“å†²åŒº 
       difference_type node_offset =
         offset > 0 ? offset / difference_type(buffer_size())
                    : -difference_type((-offset - 1) / buffer_size()) - 1;
       set_node(node + node_offset);
-      // ÇĞ»»µ½ÕıÈ·µÄ»º³åÇøÓò 
+      // åˆ‡æ¢åˆ°æ­£ç¡®çš„ç¼“å†²åŒºåŸŸ 
       cur = first + (offset - node_offset * difference_type(buffer_size()));
-      // ÇĞ»»µ½ÕıÈ·µÄ½ÚµãÎ»ÖÃ´¦ 
+      // åˆ‡æ¢åˆ°æ­£ç¡®çš„èŠ‚ç‚¹ä½ç½®å¤„ 
     }
     return *this;
   }
 
-  self operator+(difference_type n) const {        // +ÖØÔØ£¨ÓÃµ½ÁË+=£© 
+  self operator+(difference_type n) const {        // +é‡è½½ï¼ˆç”¨åˆ°äº†+=ï¼‰ 
     self tmp = *this;
     return tmp += n;
   }
 
-  self& operator-=(difference_type n)              // -=ÖØÔØ 
+  self& operator-=(difference_type n)              // -=é‡è½½ 
   { return *this += -n; }
  
-  self operator-(difference_type n) const {        // - ÖØÔØ£¨ÓÃµ½ÁË-=£© 
+  self operator-(difference_type n) const {        // - é‡è½½ï¼ˆç”¨åˆ°äº†-=ï¼‰ 
     self tmp = *this;
     return tmp -= n;
   }
 
-  reference operator[](difference_type n) const { return *(*this + n); } // []È¡Öµº¯ÊıÊµÏÖ 
+  reference operator[](difference_type n) const { return *(*this + n); } // []å–å€¼å‡½æ•°å®ç° 
 
-  bool operator==(const self& x) const { return cur == x.cur; }// ÏàµÈÌõ¼ş£¬curÏàµÈ£¨Ò²¼´Ö¸ÏòµÄ½ÚµãÏàµÈ£© 
-  bool operator!=(const self& x) const { return !(*this == x); }// ²»ÏàµÈ 
-  bool operator<(const self& x) const {                         // < ÏÈnodeºócur 
+  bool operator==(const self& x) const { return cur == x.cur; }// ç›¸ç­‰æ¡ä»¶ï¼Œcurç›¸ç­‰ï¼ˆä¹Ÿå³æŒ‡å‘çš„èŠ‚ç‚¹ç›¸ç­‰ï¼‰ 
+  bool operator!=(const self& x) const { return !(*this == x); }// ä¸ç›¸ç­‰ 
+  bool operator<(const self& x) const {                         // < å…ˆnodeåcur 
     return (node == x.node) ? (cur < x.cur) : (node < x.node);
   }
 
-  void set_node(map_pointer new_node) {                       // µ÷Õû node Ö»ÊÇ¶ÔÏÖÓĞµÄbuffer×ö²Ù×÷£¨Ã»ÓĞÆ¾¿ÕÔö¼Ó buffer£© 
+  void set_node(map_pointer new_node) {                       // è°ƒæ•´ node åªæ˜¯å¯¹ç°æœ‰çš„bufferåšæ“ä½œï¼ˆæ²¡æœ‰å‡­ç©ºå¢åŠ  bufferï¼‰ 
     node = new_node;
     first = *new_node;
     last = first + difference_type(buffer_size());
@@ -235,17 +235,17 @@ struct __deque_iterator {                                              // ***¹ØÓ
 #ifndef __STL_NON_TYPE_TMPL_PARAM_BUG
 
 template <class T, class Ref, class Ptr, size_t BufSiz>
-inline random_access_iterator_tag                             // İÍÈ¡µü´úÆ÷µÄiterator category£¨__deque_iterator<T,Ref,Ptr,BufSiz>£© 107
+inline random_access_iterator_tag                             // èƒå–è¿­ä»£å™¨çš„iterator categoryï¼ˆ__deque_iterator<T,Ref,Ptr,BufSiz>ï¼‰ 107
 iterator_category(const __deque_iterator<T, Ref, Ptr, BufSiz>&) {
   return random_access_iterator_tag();
 }
 
 template <class T, class Ref, class Ptr, size_t BufSiz>
-inline T* value_type(const __deque_iterator<T, Ref, Ptr, BufSiz>&) {// İÍÈ¡µü´úÆ÷µÄvalue type 
+inline T* value_type(const __deque_iterator<T, Ref, Ptr, BufSiz>&) {// èƒå–è¿­ä»£å™¨çš„value type 
   return 0;
 }
 
-template <class T, class Ref, class Ptr, size_t BufSiz>       // İÍÈ¡µü´úÆ÷µÄdistance type 
+template <class T, class Ref, class Ptr, size_t BufSiz>       // èƒå–è¿­ä»£å™¨çš„distance type 
 inline ptrdiff_t* distance_type(const __deque_iterator<T, Ref, Ptr, BufSiz>&) {
   return 0;
 }
@@ -253,15 +253,15 @@ inline ptrdiff_t* distance_type(const __deque_iterator<T, Ref, Ptr, BufSiz>&) {
 #else /* __STL_NON_TYPE_TMPL_PARAM_BUG */
 
 template <class T, class Ref, class Ptr>
-inline random_access_iterator_tag                          // İÍÈ¡µü´úÆ÷µÄiterator category £¨__deque_iterator<T,Ref,Ptr>£© 113
+inline random_access_iterator_tag                          // èƒå–è¿­ä»£å™¨çš„iterator category ï¼ˆ__deque_iterator<T,Ref,Ptr>ï¼‰ 113
 iterator_category(const __deque_iterator<T, Ref, Ptr>&) {
   return random_access_iterator_tag();
 }
 
-template <class T, class Ref, class Ptr>                   // İÍÈ¡µü´úÆ÷µÄvalue type 
+template <class T, class Ref, class Ptr>                   // èƒå–è¿­ä»£å™¨çš„value type 
 inline T* value_type(const __deque_iterator<T, Ref, Ptr>&) { return 0; }
 
-template <class T, class Ref, class Ptr>                   // İÍÈ¡µü´úÆ÷µÄdistance type 
+template <class T, class Ref, class Ptr>                   // èƒå–è¿­ä»£å™¨çš„distance type 
 inline ptrdiff_t* distance_type(const __deque_iterator<T, Ref, Ptr>&) {
   return 0;
 }
@@ -273,7 +273,7 @@ inline ptrdiff_t* distance_type(const __deque_iterator<T, Ref, Ptr>&) {
 // See __deque_buf_size().  The only reason that the default value is 0
 //  is as a workaround for bugs in the way that some compilers handle
 //  constant expressions.
-// Ä¬ÈÏÖµÎª 0 µÄÎ¨Ò»Ô­ÒòÊÇÎªÁË½â¾öÄ³Ğ©±àÒëÆ÷´¦Àí³£Á¿±í´ïÊ½Ê±³öÏÖµÄ´íÎó¡£
+// é»˜è®¤å€¼ä¸º 0 çš„å”¯ä¸€åŸå› æ˜¯ä¸ºäº†è§£å†³æŸäº›ç¼–è¯‘å™¨å¤„ç†å¸¸é‡è¡¨è¾¾å¼æ—¶å‡ºç°çš„é”™è¯¯ã€‚
 template <class T, class Alloc = alloc, size_t BufSiz = 0> 
 class deque {
 public:                         // Basic types
@@ -307,24 +307,24 @@ public:                         // Iterators
 
 protected:                      // Internal typedefs
   typedef pointer* map_pointer;                             // pointer = value_type* 
-  typedef simple_alloc<value_type, Alloc> data_allocator;   // date_allocator ÖĞ·ÖÅä value_type 
-  typedef simple_alloc<pointer, Alloc> map_allocator;       // map_allocator ·ÖÅä pointer = value_type* 
+  typedef simple_alloc<value_type, Alloc> data_allocator;   // date_allocator ä¸­åˆ†é… value_type 
+  typedef simple_alloc<pointer, Alloc> map_allocator;       // map_allocator åˆ†é… pointer = value_type* 
 
-  static size_type buffer_size() {                          // µÃµ½dequeµÄÒ»¸ö»º³åÇøµÄ´óĞ¡ 
+  static size_type buffer_size() {                          // å¾—åˆ°dequeçš„ä¸€ä¸ªç¼“å†²åŒºçš„å¤§å° 
     return __deque_buf_size(BufSiz, sizeof(value_type));
   }
-  static size_type initial_map_size() { return 8; }         // ³õÊ¼»¯ map£¨¿ØÖÆÖĞĞÄµÄ´óĞ¡£©Îª8 
+  static size_type initial_map_size() { return 8; }         // åˆå§‹åŒ– mapï¼ˆæ§åˆ¶ä¸­å¿ƒçš„å¤§å°ï¼‰ä¸º8 
 
 protected:                      // Data members
-  iterator start;                                            // Ò»¸ödequeËù°üº¬ iterator start£¬finish 
+  iterator start;                                            // ä¸€ä¸ªdequeæ‰€åŒ…å« iterator startï¼Œfinish 
   iterator finish;
 
-  map_pointer map;                                           // ÒÔ¼° map (Ö¸Ïò¿ØÖÆÖĞĞÄ)£¬map_pointer = T** 
+  map_pointer map;                                           // ä»¥åŠ map (æŒ‡å‘æ§åˆ¶ä¸­å¿ƒ)ï¼Œmap_pointer = T** 
   size_type map_size;                                        // size_type = size_t 
 
 public:                         // Basic accessors
-  iterator begin() { return start; }                         // ·µ»Ø start iterator
-  iterator end() { return finish; }                          // ·µ»Øfinish iterator ÏÂÃæµÄÍ¬Àí 
+  iterator begin() { return start; }                         // è¿”å› start iterator
+  iterator end() { return finish; }                          // è¿”å›finish iterator ä¸‹é¢çš„åŒç† 
   
   const_iterator begin() const { return start; } 
   const_iterator end() const { return finish; }
@@ -338,13 +338,13 @@ public:                         // Basic accessors
     return const_reverse_iterator(start);
   }
 
-  reference operator[](size_type n) { return start[difference_type(n)]; } // µÃµ½µÚ n ¸öµü´úÆ÷ËùÖ¸µÄÖµ£¬deque[n] = start[n] = *(start+n)
+  reference operator[](size_type n) { return start[difference_type(n)]; } // å¾—åˆ°ç¬¬ n ä¸ªè¿­ä»£å™¨æ‰€æŒ‡çš„å€¼ï¼Œdeque[n] = start[n] = *(start+n)
   const_reference operator[](size_type n) const {
     return start[difference_type(n)];
   }
 
-  reference front() { return *start; }                        // ·µ»Ødeque×îÇ°ÃæµÄÖµ 
-  reference back() {                                          // ·µ»Ødeque×îºóµÄÖµ 
+  reference front() { return *start; }                        // è¿”å›dequeæœ€å‰é¢çš„å€¼ 
+  reference back() {                                          // è¿”å›dequeæœ€åçš„å€¼ 
     iterator tmp = finish;
     --tmp;
     return *tmp;
@@ -356,9 +356,9 @@ public:                         // Basic accessors
     return *tmp;
   }
 
-  size_type size() const { return finish - start;; }          // µÃµ½dequeµÄ´óĞ¡¡£- µÄÖØÔØ¼û150 
-  size_type max_size() const { return size_type(-1); }        // µÃµ½dequeµÄÀíÂÛ´óĞ¡ 
-  bool empty() const { return finish == start; }              // dequeÊÇ·ñÎª¿Õ 
+  size_type size() const { return finish - start;; }          // å¾—åˆ°dequeçš„å¤§å°ã€‚- çš„é‡è½½è§150 
+  size_type max_size() const { return size_type(-1); }        // å¾—åˆ°dequeçš„ç†è®ºå¤§å° 
+  bool empty() const { return finish == start; }              // dequeæ˜¯å¦ä¸ºç©º 
 
 public:                         // Constructor, destructor.
   deque()                                                     // ctor 
@@ -367,10 +367,10 @@ public:                         // Constructor, destructor.
     create_map_and_nodes(0);
   }
 
-  deque(const deque& x)                                       // ¿½±´¹¹Ôìº¯Êı£¨ÓÃ x£© 
+  deque(const deque& x)                                       // æ‹·è´æ„é€ å‡½æ•°ï¼ˆç”¨ xï¼‰ 
     : start(), finish(), map(0), map_size(0)
   {
-    create_map_and_nodes(x.size());// xµÄ´óĞ¡ 359 
+    create_map_and_nodes(x.size());// xçš„å¤§å° 359 
     __STL_TRY {
       uninitialized_copy(x.begin(), x.end(), start);
     }
@@ -378,24 +378,24 @@ public:                         // Constructor, destructor.
   }
 
   deque(size_type n, const value_type& value)
-    : start(), finish(), map(0), map_size(0)                  // ÓÃn¸övalue³õÊ¼»¯deque£¨size_type£© 
+    : start(), finish(), map(0), map_size(0)                  // ç”¨nä¸ªvalueåˆå§‹åŒ–dequeï¼ˆsize_typeï¼‰ 
   {
     fill_initialize(n, value);
   }
 
-  deque(int n, const value_type& value)                       // ÓÃn¸övalue³õÊ¼»¯deque£¨int£©
+  deque(int n, const value_type& value)                       // ç”¨nä¸ªvalueåˆå§‹åŒ–dequeï¼ˆintï¼‰
     : start(), finish(), map(0), map_size(0)
   {
     fill_initialize(n, value);
   }
  
-  deque(long n, const value_type& value)                      // ÓÃn¸övalue³õÊ¼»¯deque£¨long£©
+  deque(long n, const value_type& value)                      // ç”¨nä¸ªvalueåˆå§‹åŒ–dequeï¼ˆlongï¼‰
     : start(), finish(), map(0), map_size(0)
   {
     fill_initialize(n, value);
   }
 
-  explicit deque(size_type n)                                 // ²»¿É½øĞĞÒşÊ½Ìæ»» value = value_type() 
+  explicit deque(size_type n)                                 // ä¸å¯è¿›è¡Œéšå¼æ›¿æ¢ value = value_type() 
     : start(), finish(), map(0), map_size(0)
   {
     fill_initialize(n, value_type());
@@ -404,7 +404,7 @@ public:                         // Constructor, destructor.
 #ifdef __STL_MEMBER_TEMPLATES
 
   template <class InputIterator>
-  deque(InputIterator first, InputIterator last)              // [first, last)À´³õÊ¼»¯ deque £¨input iterator£© 
+  deque(InputIterator first, InputIterator last)              // [first, last)æ¥åˆå§‹åŒ– deque ï¼ˆinput iteratorï¼‰ 
     : start(), finish(), map(0), map_size(0)
   {
     range_initialize(first, last, iterator_category(first));
@@ -412,7 +412,7 @@ public:                         // Constructor, destructor.
 
 #else /* __STL_MEMBER_TEMPLATES */
 
-  deque(const value_type* first, const value_type* last)      // [first, last)À´³õÊ¼»¯ deque £¨const value_type*£© 
+  deque(const value_type* first, const value_type* last)      // [first, last)æ¥åˆå§‹åŒ– deque ï¼ˆconst value_type*ï¼‰ 
     : start(), finish(), map(0), map_size(0)
   {
     create_map_and_nodes(last - first);
@@ -422,7 +422,7 @@ public:                         // Constructor, destructor.
     __STL_UNWIND(destroy_map_and_nodes());
   }
 
-  deque(const_iterator first, const_iterator last)           // [first, last)À´³õÊ¼»¯ deque 
+  deque(const_iterator first, const_iterator last)           // [first, last)æ¥åˆå§‹åŒ– deque 
     : start(), finish(), map(0), map_size(0)                 // const_iterator = __deque_iterator<T, const T&, const T&, BufSiz> 
   {                                                          // const_iterator = __deque_iterator<T, const T&, const T&>
     create_map_and_nodes(last - first);
@@ -439,23 +439,23 @@ public:                         // Constructor, destructor.
     destroy_map_and_nodes();
   }
 
-  deque& operator= (const deque& x) {                          // dequeµÄ¸³Öµº¯Êı
+  deque& operator= (const deque& x) {                          // dequeçš„èµ‹å€¼å‡½æ•°
   //  
     const size_type len = size();
-    if (&x != this) {// x ²»µÈÓÚ±¾Éí (deque)
+    if (&x != this) {// x ä¸ç­‰äºæœ¬èº« (deque)
       if (len >= x.size())
-	  // deque.size() >= x.size()£¬½«x.begin()µ½x.end()²¿·Ö¿½±´µ½ deque£¬ÔÙ°ÑdequeÖ®ºóµÄÉ¾È¥ 
+	  // deque.size() >= x.size()ï¼Œå°†x.begin()åˆ°x.end()éƒ¨åˆ†æ‹·è´åˆ° dequeï¼Œå†æŠŠdequeä¹‹åçš„åˆ å» 
         erase(copy(x.begin(), x.end(), start), finish);
       else {// deque.size < x.size() 
         const_iterator mid = x.begin() + difference_type(len);
-        copy(x.begin(), mid, start); //ÏÈ½«x.begin() µ½ x.begin() + lenµÄ²¿·Ö¿½±´µ½deque
-        insert(finish, mid, x.end()); //ÔÙ½«ÓàÏÂ£¨midµ½x.end()£©µÄ²åÈëµ½xÖ®ºó
+        copy(x.begin(), mid, start); //å…ˆå°†x.begin() åˆ° x.begin() + lençš„éƒ¨åˆ†æ‹·è´åˆ°deque
+        insert(finish, mid, x.end()); //å†å°†ä½™ä¸‹ï¼ˆmidåˆ°x.end()ï¼‰çš„æ’å…¥åˆ°xä¹‹å
       }
     }
-    return *this;// ·µ»Ø×ÔÉí deque 
+    return *this;// è¿”å›è‡ªèº« deque 
   }        
 
-  void swap(deque& x) {                                        // Á½¸ödeque½»»»£¨Ò»¸ödequeÖĞ½ö°üº¬ start£¬finish£¬map£¬map_size£© 
+  void swap(deque& x) {                                        // ä¸¤ä¸ªdequeäº¤æ¢ï¼ˆä¸€ä¸ªdequeä¸­ä»…åŒ…å« startï¼Œfinishï¼Œmapï¼Œmap_sizeï¼‰ 
     __STD::swap(start, x.start);
     __STD::swap(finish, x.finish);
     __STD::swap(map, x.map);
@@ -464,142 +464,142 @@ public:                         // Constructor, destructor.
 
 public:                         // push_* and pop_*
   
-  void push_back(const value_type& t) {                        // ½«ÖµÎªtµÄ½Úµãºó²åµ½deque 
+  void push_back(const value_type& t) {                        // å°†å€¼ä¸ºtçš„èŠ‚ç‚¹åæ’åˆ°deque 
     if (finish.cur != finish.last - 1) {
-    	// finishËùÔÚµÄbuffer »¹ÓĞÊ£ÓàµÄ½Úµã¿ÉÒÔ²åÈë¡£ 
+    	// finishæ‰€åœ¨çš„buffer è¿˜æœ‰å‰©ä½™çš„èŠ‚ç‚¹å¯ä»¥æ’å…¥ã€‚ 
       construct(finish.cur, t);
       ++finish.cur;
     }
-    else// finishËùÔÚµÄbufferÒÑ¾­ÂúÁË 
+    else// finishæ‰€åœ¨çš„bufferå·²ç»æ»¡äº† 
       push_back_aux(t);                                                                                                                                // push_back_aux() 
   }
 
-  void push_front(const value_type& t) {                       // ½«ÖµÎªtµÄ½Úµã Ç°²åµ½deque
+  void push_front(const value_type& t) {                       // å°†å€¼ä¸ºtçš„èŠ‚ç‚¹ å‰æ’åˆ°deque
     if (start.cur != start.first) {
-    	// startµÄµ±Ç°Î»ÖÃ²»ÎªstartµÄ first Î»ÖÃ£¨startËùÔÚµÄbuffer»¹¿ÉÒÔ×°£© 
+    	// startçš„å½“å‰ä½ç½®ä¸ä¸ºstartçš„ first ä½ç½®ï¼ˆstartæ‰€åœ¨çš„bufferè¿˜å¯ä»¥è£…ï¼‰ 
       construct(start.cur - 1, t);
       --start.cur;
     }
-    else// startËùÔÚµÄbuffer×°²»ÏÂÁË 
+    else// startæ‰€åœ¨çš„bufferè£…ä¸ä¸‹äº† 
       push_front_aux(t);                                                                                                                               // push_front_aux()
   }
 
-  void pop_back() {                                            // É¾³ı×îºóÒ»¸ö½Úµã 
+  void pop_back() {                                            // åˆ é™¤æœ€åä¸€ä¸ªèŠ‚ç‚¹ 
     if (finish.cur != finish.first) {
       --finish.cur;
       destroy(finish.cur);
     }
-    else// ¸ÃÇéĞÎÎª finish ËùÖ¸µÄbufferÃ»ÓĞÒ»¸öÔªËØ 
+    else// è¯¥æƒ…å½¢ä¸º finish æ‰€æŒ‡çš„bufferæ²¡æœ‰ä¸€ä¸ªå…ƒç´  
       pop_back_aux();                                                                                                                                  // pop_back_aux() 
   }
 
-  void pop_front() {                                           // É¾³ı×îÇ°µÄÒ»¸ö½Úµã 
+  void pop_front() {                                           // åˆ é™¤æœ€å‰çš„ä¸€ä¸ªèŠ‚ç‚¹ 
     if (start.cur != start.last - 1) {
       destroy(start.cur);
       ++start.cur;
     }
-    else// ¸ÃÇéĞÎÎª start ËùÖ¸µÄbuffer½öÓĞÒ»¸öÔªËØ
+    else// è¯¥æƒ…å½¢ä¸º start æ‰€æŒ‡çš„bufferä»…æœ‰ä¸€ä¸ªå…ƒç´ 
       pop_front_aux();                                                                                                                                  // pop_front_aux() 
   }
 
 public:                         // Insert
 
-  iterator insert(iterator position, const value_type& x) {    // ÔÚpositionÎ»ÖÃ²åÈëÖµÎªxµØ½Úµã¡£ 
-    if (position.cur == start.cur) {// Èôposition²»ÊÇstartÖ¸ÏòµÄcur£¬ÔòÇ°²å 
+  iterator insert(iterator position, const value_type& x) {    // åœ¨positionä½ç½®æ’å…¥å€¼ä¸ºxåœ°èŠ‚ç‚¹ã€‚ 
+    if (position.cur == start.cur) {// è‹¥positionä¸æ˜¯startæŒ‡å‘çš„curï¼Œåˆ™å‰æ’ 
       push_front(x);
       return start;
     }
-    else if (position.cur == finish.cur) { // Èôposition²»ÊÇfinishÖ¸ÏòµÄcur£¬Ôòºó²å 
+    else if (position.cur == finish.cur) { // è‹¥positionä¸æ˜¯finishæŒ‡å‘çš„curï¼Œåˆ™åæ’ 
       push_back(x);
       iterator tmp = finish;
       --tmp;
       return tmp;
     }
-    else {           // ÈôÒª²åµÃÎ»ÖÃÎªdequeÖĞ¼äµÄÎ»ÖÃ£¬µ÷ÓÃ insert_aux()                                                                                // insert_aux() 
+    else {           // è‹¥è¦æ’å¾—ä½ç½®ä¸ºdequeä¸­é—´çš„ä½ç½®ï¼Œè°ƒç”¨ insert_aux()                                                                                // insert_aux() 
       return insert_aux(position, x);
     }
   }
 
-  iterator insert(iterator position) { return insert(position, value_type()); }// insert()µÄÖØÔØ°æ±¾ 
+  iterator insert(iterator position) { return insert(position, value_type()); }// insert()çš„é‡è½½ç‰ˆæœ¬ 
 
-  void insert(iterator pos, size_type n, const value_type& x); // ÔÚposÎ»ÖÃ²åÈë n(size_type) ¸öÖµÎªxµÄ½Úµã¡£ 
+  void insert(iterator pos, size_type n, const value_type& x); // åœ¨posä½ç½®æ’å…¥ n(size_type) ä¸ªå€¼ä¸ºxçš„èŠ‚ç‚¹ã€‚ 
 
-  void insert(iterator pos, int n, const value_type& x) {       // ÔÚposÎ»ÖÃ²åÈë n(int£¬ºóÃæ»áÇ¿ÖÆ×ªĞÍÎªsize_type) ¸öÖµÎªxµÄ½Úµã¡£ 
+  void insert(iterator pos, int n, const value_type& x) {       // åœ¨posä½ç½®æ’å…¥ n(intï¼Œåé¢ä¼šå¼ºåˆ¶è½¬å‹ä¸ºsize_type) ä¸ªå€¼ä¸ºxçš„èŠ‚ç‚¹ã€‚ 
     insert(pos, (size_type) n, x);
   }
-  void insert(iterator pos, long n, const value_type& x) {     //ÔÚposÎ»ÖÃ²åÈë n(long£¬ºóÃæ»áÇ¿ÖÆ×ªĞÍÎªsize_type) ¸öÖµÎªxµÄ½Úµã¡£ 
+  void insert(iterator pos, long n, const value_type& x) {     //åœ¨posä½ç½®æ’å…¥ n(longï¼Œåé¢ä¼šå¼ºåˆ¶è½¬å‹ä¸ºsize_type) ä¸ªå€¼ä¸ºxçš„èŠ‚ç‚¹ã€‚ 
     insert(pos, (size_type) n, x);
   }
 
 #ifdef __STL_MEMBER_TEMPLATES  
 
   template <class InputIterator>
-  void insert(iterator pos, InputIterator first, InputIterator last) {// ½«[fisrt, last)²åÈëµ½posÎ»ÖÃ£¬µü´úÆ÷Îªinput iterator 
+  void insert(iterator pos, InputIterator first, InputIterator last) {// å°†[fisrt, last)æ’å…¥åˆ°posä½ç½®ï¼Œè¿­ä»£å™¨ä¸ºinput iterator 
     insert(pos, first, last, iterator_category(first)); 
-	// insertµÄÒ»¸öÖØÔØº¯Êı 
+	// insertçš„ä¸€ä¸ªé‡è½½å‡½æ•° 
   }
 
 #else /* __STL_MEMBER_TEMPLATES */
 
-  void insert(iterator pos, const value_type* first, const value_type* last);// ½«[fisrt, last)²åÈëµ½posÎ»ÖÃ£¬µü´úÆ÷Îª ´Óconst value_type* 
-  void insert(iterator pos, const_iterator first, const_iterator last);// ½«[fisrt, last)²åÈëµ½posÎ»ÖÃ£¬µü´úÆ÷Îª ´Óconst_iterator = __deque_iterator<T, const T, const T*>
+  void insert(iterator pos, const value_type* first, const value_type* last);// å°†[fisrt, last)æ’å…¥åˆ°posä½ç½®ï¼Œè¿­ä»£å™¨ä¸º ä»const value_type* 
+  void insert(iterator pos, const_iterator first, const_iterator last);// å°†[fisrt, last)æ’å…¥åˆ°posä½ç½®ï¼Œè¿­ä»£å™¨ä¸º ä»const_iterator = __deque_iterator<T, const T, const T*>
 
 #endif /* __STL_MEMBER_TEMPLATES */   // insert end 
 
-  void resize(size_type new_size, const value_type& x) {       // resizeº¯Êı 
+  void resize(size_type new_size, const value_type& x) {       // resizeå‡½æ•° 
     const size_type len = size();
-    if (new_size < len) // Èônew_size Ğ¡ÓÚ len ÔòÖ»È¡Ç°new_size ¸öÔªËØ 
+    if (new_size < len) // è‹¥new_size å°äº len åˆ™åªå–å‰new_size ä¸ªå…ƒç´  
       erase(start + new_size, finish);
-    else // ·ñÔòÔÚÖ®ºó²åÈënew_size - len¸öÖµÎªxµÄ½Úµã 
+    else // å¦åˆ™åœ¨ä¹‹åæ’å…¥new_size - lenä¸ªå€¼ä¸ºxçš„èŠ‚ç‚¹ 
       insert(finish, new_size - len, x);
   }
 
-  void resize(size_type new_size) { resize(new_size, value_type()); } // resizeµÄÖØÔØ°æ±¾ 
+  void resize(size_type new_size) { resize(new_size, value_type()); } // resizeçš„é‡è½½ç‰ˆæœ¬ 
 
 public:                         // Erase
-  iterator erase(iterator pos) {                                     // É¾³ıÎ»ÖÃÎªposµÄ½Úµã¡£ 
+  iterator erase(iterator pos) {                                     // åˆ é™¤ä½ç½®ä¸ºposçš„èŠ‚ç‚¹ã€‚ 
     iterator next = pos;
-    ++next;// next ºóÒÆÒ»Î»(posµÄºóÒ»Î») 
+    ++next;// next åç§»ä¸€ä½(posçš„åä¸€ä½) 
     difference_type index = pos - start;
-    // Ä¿±êÎ»ÖÃposºÍstartµÄ¾àÀë ¡ª¡ªindex 
+    // ç›®æ ‡ä½ç½®poså’Œstartçš„è·ç¦» â€”â€”index 
     if (index < (size() >> 1)) {
-      // index ¸ü¿¿½üÍ·½Úµã 
+      // index æ›´é è¿‘å¤´èŠ‚ç‚¹ 
       copy_backward(start, pos, next);
-      // ÒÆ¶¯Çå³ıµãposÖ®Ç°µÄÔªËØ¡£                                                                                                                           // £¨½«[start,pos)ÒÆ¶¯µ½nextÎ»ÖÃ £© 
+      // ç§»åŠ¨æ¸…é™¤ç‚¹posä¹‹å‰çš„å…ƒç´ ã€‚                                                                                                                           // ï¼ˆå°†[start,pos)ç§»åŠ¨åˆ°nextä½ç½® ï¼‰ 
       pop_front();
-      // ×îÇ°ÃæµÄÔªËØÉ¾³ı(posËùÖ¸µÄ½Úµã) 
+      // æœ€å‰é¢çš„å…ƒç´ åˆ é™¤(posæ‰€æŒ‡çš„èŠ‚ç‚¹) 
     }
-    else {// ¸ü¿¿½üÎ²½Úµã 
+    else {// æ›´é è¿‘å°¾èŠ‚ç‚¹ 
       copy(next, finish, pos);
-      // ÒÆ¶¯Çå³ıµãÖ®ºóµÄ½Úµã£¨ÔªËØ£© 
+      // ç§»åŠ¨æ¸…é™¤ç‚¹ä¹‹åçš„èŠ‚ç‚¹ï¼ˆå…ƒç´ ï¼‰ 
       pop_back();
-      // ×îºóÃæµÄÔªËØÉ¾³ı¡£ 
+      // æœ€åé¢çš„å…ƒç´ åˆ é™¤ã€‚ 
     }
-    return start + index;// ·µ»ØµÄµü´úÆ÷Ö¸ÏòposµÄºóÒ»Î»ÔªËØ 
+    return start + index;// è¿”å›çš„è¿­ä»£å™¨æŒ‡å‘posçš„åä¸€ä½å…ƒç´  
   }
 
-  iterator erase(iterator first, iterator last);                   // É¾³ı[first, last)Ö®¼äµÄÔªËØ 
-  void clear();                                                      // Çå³ıdeque(É¾³ıËùÓĞµÄ½Úµã) 
+  iterator erase(iterator first, iterator last);                   // åˆ é™¤[first, last)ä¹‹é—´çš„å…ƒç´  
+  void clear();                                                      // æ¸…é™¤deque(åˆ é™¤æ‰€æœ‰çš„èŠ‚ç‚¹) 
 
-protected:                        // Internal construction/destruction£¨ÄÚÖÃµÄ¹¹Ôìº¯ÊıºÍÎö¹¹º¯Êı£© 
+protected:                        // Internal construction/destructionï¼ˆå†…ç½®çš„æ„é€ å‡½æ•°å’Œææ„å‡½æ•°ï¼‰ 
 
-  void create_map_and_nodes(size_type num_elements);  // ¹¹Ôì mapºÍ´´½¨node¡£ 
-  void destroy_map_and_nodes();                       // Îö¹¹ map 
-  void fill_initialize(size_type n, const value_type& value);                                                                                                                  // ²ÂÊÇÓÃn¸övalue³õÊ¼»¯deque 
+  void create_map_and_nodes(size_type num_elements);  // æ„é€  mapå’Œåˆ›å»ºnodeã€‚ 
+  void destroy_map_and_nodes();                       // ææ„ map 
+  void fill_initialize(size_type n, const value_type& value);                                                                                                                  // çŒœæ˜¯ç”¨nä¸ªvalueåˆå§‹åŒ–deque 
 
 #ifdef __STL_MEMBER_TEMPLATES  
 
   template <class InputIterator>
-  void range_initialize(InputIterator first, InputIterator last,                                                                                                                 // ²ÂÊÇÓÃ[first, last)³õÊ¼»¯  input iterator°æ±¾ 
+  void range_initialize(InputIterator first, InputIterator last,                                                                                                                 // çŒœæ˜¯ç”¨[first, last)åˆå§‹åŒ–  input iteratorç‰ˆæœ¬ 
                         input_iterator_tag);
 
   template <class ForwardIterator>
-  void range_initialize(ForwardIterator first, ForwardIterator last, // forward iterator °æ±¾ 
+  void range_initialize(ForwardIterator first, ForwardIterator last, // forward iterator ç‰ˆæœ¬ 
                         forward_iterator_tag);
 
 #endif /* __STL_MEMBER_TEMPLATES */
 
-protected:                        // Internal push_* and pop_* ¹ØÓÚpush_back ºÍ push_front µÄ¸¨Öúº¯Êı 
+protected:                        // Internal push_* and pop_* å…³äºpush_back å’Œ push_front çš„è¾…åŠ©å‡½æ•° 
 
   void push_back_aux(const value_type& t);
   void push_front_aux(const value_type& t);
@@ -611,55 +611,55 @@ protected:                        // Internal insert functions
 #ifdef __STL_MEMBER_TEMPLATES  
 
   template <class InputIterator>
-  void insert(iterator pos, InputIterator first, InputIterator last, // ½«[first, last)²åÈëµ½posÎ»ÖÃ£¬Õë¶Ôinput_iterator_tag
+  void insert(iterator pos, InputIterator first, InputIterator last, // å°†[first, last)æ’å…¥åˆ°posä½ç½®ï¼Œé’ˆå¯¹input_iterator_tag
               input_iterator_tag);
 
   template <class ForwardIterator>
-  void insert(iterator pos, ForwardIterator first, ForwardIterator last,// ½«[first, last)²åÈëµ½posÎ»ÖÃ£¬Õë¶Ôforward_iterator_tag 
+  void insert(iterator pos, ForwardIterator first, ForwardIterator last,// å°†[first, last)æ’å…¥åˆ°posä½ç½®ï¼Œé’ˆå¯¹forward_iterator_tag 
               forward_iterator_tag);
 
 #endif /* __STL_MEMBER_TEMPLATES */
-                                                                        // insert_aux()º¯Êı 
+                                                                        // insert_aux()å‡½æ•° 
   iterator insert_aux(iterator pos, const value_type& x);
   void insert_aux(iterator pos, size_type n, const value_type& x);
 
 #ifdef __STL_MEMBER_TEMPLATES  
 
-  template <class ForwardIterator>// Õë¶Ôforward iterator 
+  template <class ForwardIterator>// é’ˆå¯¹forward iterator 
   void insert_aux(iterator pos, ForwardIterator first, ForwardIterator last,
                   size_type n);
 
 #else /* __STL_MEMBER_TEMPLATES */
   
-  void insert_aux(iterator pos,// Õë¶Ôconst value_type* 
+  void insert_aux(iterator pos,// é’ˆå¯¹const value_type* 
                   const value_type* first, const value_type* last,
                   size_type n);
 
   void insert_aux(iterator pos, const_iterator first, const_iterator last,
-                  size_type n);// Õë¶Ôconst_iterator 
+                  size_type n);// é’ˆå¯¹const_iterator 
  
 #endif /* __STL_MEMBER_TEMPLATES */
 
-iterator reserve_elements_at_front(size_type n) {          // ÔÚÍ·²¿¼ÓÈën¸ö´æ´¢µÄ½Úµã 
+iterator reserve_elements_at_front(size_type n) {          // åœ¨å¤´éƒ¨åŠ å…¥nä¸ªå­˜å‚¨çš„èŠ‚ç‚¹ 
     size_type vacancies = start.cur - start.first; 
-	// buffer»¹Ê£ÏÂ¼¸¸ö¿ÉÒÔ²åÈëµÄ½Úµã¡£ 
+	// bufferè¿˜å‰©ä¸‹å‡ ä¸ªå¯ä»¥æ’å…¥çš„èŠ‚ç‚¹ã€‚ 
     if (n > vacancies) 
-    // Èç¹û n ´óÓÚ vacancies 
-      new_elements_at_front(n - vacancies);// Ìí¼ÓĞÂµÄ node(Ôö¼Óbuffers) 
-    return start - difference_type(n); // ·µ»ØµÄµü´úÆ÷£¨startÏòÇ°×ßn²½£¬startÇ°ÒÑ¾­ÓĞn¸ö´¢´æµÄ½Úµãelems£© 
+    // å¦‚æœ n å¤§äº vacancies 
+      new_elements_at_front(n - vacancies);// æ·»åŠ æ–°çš„ node(å¢åŠ buffers) 
+    return start - difference_type(n); // è¿”å›çš„è¿­ä»£å™¨ï¼ˆstartå‘å‰èµ°næ­¥ï¼Œstartå‰å·²ç»æœ‰nä¸ªå‚¨å­˜çš„èŠ‚ç‚¹elemsï¼‰ 
   }
 
-  iterator reserve_elements_at_back(size_type n) {         // ÔÚÎ²²¿¼ÓÈën¸ö´æ´¢µÄ½Úµã 
+  iterator reserve_elements_at_back(size_type n) {         // åœ¨å°¾éƒ¨åŠ å…¥nä¸ªå­˜å‚¨çš„èŠ‚ç‚¹ 
     size_type vacancies = (finish.last - finish.cur) - 1;
-    // finishËùÔÚbufferÊ£ÏÂ¿ÉÒÔ²åÈëµÄ½Úµã  
-    if (n > vacancies)// Èôn´óÓÚ vacancies 
-      new_elements_at_back(n - vacancies);// ÔÚ×îºó¼ÓÈëĞÂµÄ node 
-    return finish + difference_type(n);// ·µ»Øµü´úÆ÷£¬finishÍùºó×ßn²½¡£ 
+    // finishæ‰€åœ¨bufferå‰©ä¸‹å¯ä»¥æ’å…¥çš„èŠ‚ç‚¹  
+    if (n > vacancies)// è‹¥nå¤§äº vacancies 
+      new_elements_at_back(n - vacancies);// åœ¨æœ€ååŠ å…¥æ–°çš„ node 
+    return finish + difference_type(n);// è¿”å›è¿­ä»£å™¨ï¼Œfinishå¾€åèµ°næ­¥ã€‚ 
   }
-                                                           // ÔÙÍ·ºÍÎ²¼ÓÈëĞÂµÄÔªËØ£¨Î´¸³Öµ£©£¬·Ö±ğ±» reserve_elements_at_front ºÍ reserve_elements_at_back µ÷ÓÃ¡£ 
+                                                           // å†å¤´å’Œå°¾åŠ å…¥æ–°çš„å…ƒç´ ï¼ˆæœªèµ‹å€¼ï¼‰ï¼Œåˆ†åˆ«è¢« reserve_elements_at_front å’Œ reserve_elements_at_back è°ƒç”¨ã€‚ 
   void new_elements_at_front(size_type new_elements);   
   void new_elements_at_back(size_type new_elements);
-                                                           //ÕâÁ½¸öº¯Êı¸Ğ¾õÊÇÎªÁËdebug (»ù±¾³öÏÖÔÚ__STL_UNWIND) 
+                                                           //è¿™ä¸¤ä¸ªå‡½æ•°æ„Ÿè§‰æ˜¯ä¸ºäº†debug (åŸºæœ¬å‡ºç°åœ¨__STL_UNWIND) 
   void destroy_nodes_at_front(iterator before_start);
   void destroy_nodes_at_back(iterator after_finish);
 
@@ -681,8 +681,8 @@ protected:                      // Allocation of map and nodes
 
   void reallocate_map(size_type nodes_to_add, bool add_at_front);
 
-  pointer allocate_node() { return data_allocator::allocate(buffer_size()); } // ·ÖÅänodeµÄÄÚ´æ¡£ 
-  void deallocate_node(pointer n) {                                           // Îö¹¹nodeÖ¸Õë n 
+  pointer allocate_node() { return data_allocator::allocate(buffer_size()); } // åˆ†é…nodeçš„å†…å­˜ã€‚ 
+  void deallocate_node(pointer n) {                                           // ææ„nodeæŒ‡é’ˆ n 
     data_allocator::deallocate(n, buffer_size());
   }
 
@@ -775,81 +775,81 @@ void deque<T, Alloc, BufSize>::insert(iterator pos,
 #endif /* __STL_MEMBER_TEMPLATES */
 
 template <class T, class Alloc, size_t BufSize>
-deque<T, Alloc, BufSize>::iterator       // ·µ»ØÖµ deque<T,Alloc. BufSize>::iterator 
-deque<T, Alloc, BufSize>::erase(iterator first, iterator last) {// º¯ÊıÃû deque<T, Alloc, BufSize>::earse()  
+deque<T, Alloc, BufSize>::iterator       // è¿”å›å€¼ deque<T,Alloc. BufSize>::iterator 
+deque<T, Alloc, BufSize>::erase(iterator first, iterator last) {// å‡½æ•°å deque<T, Alloc, BufSize>::earse()  
   if (first == start && last == finish) { 
-    // Ç¡ºÃÎªÈ«deque 
+    // æ°å¥½ä¸ºå…¨deque 
     clear();
-    return finish;// ·µ»Øfinish 
+    return finish;// è¿”å›finish 
   }
-  else { // Èô²»ÎªÈ«deque 
+  else { // è‹¥ä¸ä¸ºå…¨deque 
     difference_type n = last - first;
-	// È·¶¨Çå³şµÄÔªËØ¸öÊı 
+	// ç¡®å®šæ¸…æ¥šçš„å…ƒç´ ä¸ªæ•° 
     difference_type elems_before = first - start;
-    // first¾àÀëstartµÄÔªËØ¸öÊı 
+    // firstè·ç¦»startçš„å…ƒç´ ä¸ªæ•° 
     if (elems_before < (size() - n) / 2) {
-    // firstÖ®Ç°µÄÔªËØ¸öÊı¸ü¶à 
-      copy_backward(start, first, last);// ÒÆ¶¯[first£¬last)µ½startÎ»ÖÃ 
-      // ÓÉÓÚ[first,last)ÒÑ¾­ÎªdequeµÄÇ°¼¸¸öÔªËØ£¬½ÓÏÂÀ´µÄÊÂÇéÖ»ĞèÒª½«Ç°ÃæµÄÔªËØÉ¾³ı¼´¿É¡£
+    // firstä¹‹å‰çš„å…ƒç´ ä¸ªæ•°æ›´å¤š 
+      copy_backward(start, first, last);// ç§»åŠ¨[firstï¼Œlast)åˆ°startä½ç½® 
+      // ç”±äº[first,last)å·²ç»ä¸ºdequeçš„å‰å‡ ä¸ªå…ƒç´ ï¼Œæ¥ä¸‹æ¥çš„äº‹æƒ…åªéœ€è¦å°†å‰é¢çš„å…ƒç´ åˆ é™¤å³å¯ã€‚
 	  iterator new_start = start + n; 
-      destroy(start, new_start);// É¾³ı[start£¬new_start)Ö®¼äµÄÔªËØ 
+      destroy(start, new_start);// åˆ é™¤[startï¼Œnew_start)ä¹‹é—´çš„å…ƒç´  
       for (map_pointer cur = start.node; cur < new_start.node; ++cur)
-        data_allocator::deallocate(*cur, buffer_size());// Îö¹¹ mapÖĞµÄnode 
-      start = new_start;// ÖØĞÂÖ¸¶¨start 
+        data_allocator::deallocate(*cur, buffer_size());// ææ„ mapä¸­çš„node 
+      start = new_start;// é‡æ–°æŒ‡å®šstart 
     }
-    else {// lastÖ®ºóµÄÔªËØ¸ü¶à 
-      copy(last, finish, first);// [last,finish)ÒÆ¶¯µ½firstÎ»ÖÃ
-	  //½ÓÏÂÀ´Ö»ĞèÉ¾³ıdequeºóÃæµÄÔªËØ¡£ 
+    else {// lastä¹‹åçš„å…ƒç´ æ›´å¤š 
+      copy(last, finish, first);// [last,finish)ç§»åŠ¨åˆ°firstä½ç½®
+	  //æ¥ä¸‹æ¥åªéœ€åˆ é™¤dequeåé¢çš„å…ƒç´ ã€‚ 
       iterator new_finish = finish - n;
-      destroy(new_finish, finish);// É¾³ıÍê±Ï 
+      destroy(new_finish, finish);// åˆ é™¤å®Œæ¯• 
       for (map_pointer cur = new_finish.node + 1; cur <= finish.node; ++cur)
-        data_allocator::deallocate(*cur, buffer_size());// Îö¹¹mapÖĞµÄnode 
-      finish = new_finish;// ÖØĞÂÖ¸¶¨finish 
+        data_allocator::deallocate(*cur, buffer_size());// ææ„mapä¸­çš„node 
+      finish = new_finish;// é‡æ–°æŒ‡å®šfinish 
     }
-    return start + elems_before;// ·µ»ØµÄµü´úÆ÷Ö¸ÏòÔ­À´firstÎ»ÖÃµÄÔªËØ¡£ 
+    return start + elems_before;// è¿”å›çš„è¿­ä»£å™¨æŒ‡å‘åŸæ¥firstä½ç½®çš„å…ƒç´ ã€‚ 
   }
 }
 
-template <class T, class Alloc, size_t BufSize>            // Çå¿ÕdequeÖĞµÄËùÓĞÔªËØ 
-void deque<T, Alloc, BufSize>::clear() {                                                                                                                         // deallocateºÍdistoryº¯Êı²»ÊìÁ·£¨ÎªÄÚ´æ¹ÜÀíµÄÄÚÈİ£© 
+template <class T, class Alloc, size_t BufSize>            // æ¸…ç©ºdequeä¸­çš„æ‰€æœ‰å…ƒç´  
+void deque<T, Alloc, BufSize>::clear() {                                                                                                                         // deallocateå’Œdistoryå‡½æ•°ä¸ç†Ÿç»ƒï¼ˆä¸ºå†…å­˜ç®¡ç†çš„å†…å®¹ï¼‰ 
   for (map_pointer node = start.node + 1; node < finish.node; ++node) {
-    // ÁôstartËùÔÚµÄnodeºÍfinishËùÔÚµÄnode 
-	destroy(*node, *node + buffer_size()); // Îö¹¹nodeËùÔÚµÄbuffer£¨Ò²¼´Õâ¸öbufferÉÏµÄËùÓĞ½Úµã¡££©
-    data_allocator::deallocate(*node, buffer_size()); // ÔÙÇå¿ÕÄÚ´æ¡£
+    // ç•™startæ‰€åœ¨çš„nodeå’Œfinishæ‰€åœ¨çš„node 
+	destroy(*node, *node + buffer_size()); // ææ„nodeæ‰€åœ¨çš„bufferï¼ˆä¹Ÿå³è¿™ä¸ªbufferä¸Šçš„æ‰€æœ‰èŠ‚ç‚¹ã€‚ï¼‰
+    data_allocator::deallocate(*node, buffer_size()); // å†æ¸…ç©ºå†…å­˜ã€‚
   }
 
-  if (start.node != finish.node) {// ÈôÁ½Õß²»ÔÚÍ¬Ò»¸önode 
+  if (start.node != finish.node) {// è‹¥ä¸¤è€…ä¸åœ¨åŒä¸€ä¸ªnode 
     destroy(start.cur, start.last);
     destroy(finish.first, finish.cur);
-	// ÁôÒ»¸ö buffer
+	// ç•™ä¸€ä¸ª buffer
     data_allocator::deallocate(finish.first, buffer_size()); 
   }
   else
     destroy(start.cur, finish.cur);
 
-  finish = start; // ÁôµÄÕâ¸öbuffer »Øµ½×îÔ­Ê¼µÄÊ±ºò£¬finish = start¡£
+  finish = start; // ç•™çš„è¿™ä¸ªbuffer å›åˆ°æœ€åŸå§‹çš„æ—¶å€™ï¼Œfinish = startã€‚
 }
 
-// Õâ¸öº¯ÊıÖ»ÓĞÔÚdequeµÄ¹¹Ôìº¯ÊıÖĞ²ÅÊ¹ÓÃ£¬µ÷ÓÃËüµÄfill_initialized
-// ºÍrange_initializedº¯ÊıÒ²Ö»±»dequeµÄ¹¹Ôìº¯Êıµ÷ÓÃ¡£ 
+// è¿™ä¸ªå‡½æ•°åªæœ‰åœ¨dequeçš„æ„é€ å‡½æ•°ä¸­æ‰ä½¿ç”¨ï¼Œè°ƒç”¨å®ƒçš„fill_initialized
+// å’Œrange_initializedå‡½æ•°ä¹Ÿåªè¢«dequeçš„æ„é€ å‡½æ•°è°ƒç”¨ã€‚ 
 template <class T, class Alloc, size_t BufSize>
 void deque<T, Alloc, BufSize>::create_map_and_nodes(size_type num_elements) {
-  // num_elements ÎªĞÂµÄÔªËØ¸öÊı
+  // num_elements ä¸ºæ–°çš„å…ƒç´ ä¸ªæ•°
   size_type num_nodes = num_elements / buffer_size() + 1;
   map_size = max(initial_map_size(), num_nodes + 2);
   map = map_allocator::allocate(map_size);
-  // Ê×ÏÈÈ·¶¨ĞèÒªµÄnodeÊı£»ÔÙ»ñÈ¡map_size£»×îºóÓÃmap_allocator::allocateº¯Êı·ÖÅäÄÚ´æ 
+  // é¦–å…ˆç¡®å®šéœ€è¦çš„nodeæ•°ï¼›å†è·å–map_sizeï¼›æœ€åç”¨map_allocator::allocateå‡½æ•°åˆ†é…å†…å­˜ 
   map_pointer nstart = map + (map_size - num_nodes) / 2;
-  map_pointer nfinish = nstart + num_nodes - 1;// ¼õ1Ó¦¸ÃÊÇÒòÎª nstartÕ¼ÁËÒ»¸önode£¬½ÓÏÂÀ´Ö»ĞèÒª num_nodes - 1¸ö¡£ 
+  map_pointer nfinish = nstart + num_nodes - 1;// å‡1åº”è¯¥æ˜¯å› ä¸º nstartå äº†ä¸€ä¸ªnodeï¼Œæ¥ä¸‹æ¥åªéœ€è¦ num_nodes - 1ä¸ªã€‚ 
   /*
-   È·¶¨nstartºÍnfinish  ÕâÀïµÄ´¦ÀíºÜÓĞ¼¼ÇÉ
-  1,¶ÔÓÚnstart = map+(map_size - num_nodes)/2£¬±£Ö¤ÁË nstart - map>= 1£¬ÕâÃ´´¦Àí±£Ö¤ÁËnstartÇ°ÖÁÉÙÓĞÒ»¸ö»º³åÇø¡£
-  2,¶ÔÓÚnfinish = nstart + num_nodes - 1£¬ ±£Ö¤ÁË nfinish<= map_size - 1£¬Í¬ÀíÕâÃ´´¦ÀíÒ²Ê¹µÃnfinishºóÖÁÉÙÓĞÒ»¸ö»º³åÇø 
+   ç¡®å®šnstartå’Œnfinish  è¿™é‡Œçš„å¤„ç†å¾ˆæœ‰æŠ€å·§
+  1,å¯¹äºnstart = map+(map_size - num_nodes)/2ï¼Œä¿è¯äº† nstart - map>= 1ï¼Œè¿™ä¹ˆå¤„ç†ä¿è¯äº†nstartå‰è‡³å°‘æœ‰ä¸€ä¸ªç¼“å†²åŒºã€‚
+  2,å¯¹äºnfinish = nstart + num_nodes - 1ï¼Œ ä¿è¯äº† nfinish<= map_size - 1ï¼ŒåŒç†è¿™ä¹ˆå¤„ç†ä¹Ÿä½¿å¾—nfinishåè‡³å°‘æœ‰ä¸€ä¸ªç¼“å†²åŒº 
   */ 
   map_pointer cur; 
   __STL_TRY {
     for (cur = nstart; cur <= nfinish; ++cur)
-      *cur = allocate_node();// ·ÖÅäÄÚ´æ£¨¸ønstartºÍnfinishÖ®¼äµÄnode£© 
+      *cur = allocate_node();// åˆ†é…å†…å­˜ï¼ˆç»™nstartå’Œnfinishä¹‹é—´çš„nodeï¼‰ 
   }
 #     ifdef  __STL_USE_EXCEPTIONS 
   catch(...) {
@@ -859,27 +859,27 @@ void deque<T, Alloc, BufSize>::create_map_and_nodes(size_type num_elements) {
     throw;
   }
 #     endif /* __STL_USE_EXCEPTIONS */
-// ÉèÖÃstart£¬finishµÄfirst¡¢last¡¢cur                                    ¾ßÌåµÄ¿ÉÒÔ²é¿´set_node()º¯Êı 
-  start.set_node(nstart);// start ÒÆ¶¯µ½ nstart 
-  finish.set_node(nfinish);// finish ÒÆ¶¯µ½ nfinish 
-  start.cur = start.first;// È·¶¨startµÄcur 
-  finish.cur = finish.first + num_elements % buffer_size(); // È·¶¨finishµÄcur   %ÊÇÇóÓà£¡£¡£¡£¡£¡£¡
+// è®¾ç½®startï¼Œfinishçš„firstã€lastã€cur                                    å…·ä½“çš„å¯ä»¥æŸ¥çœ‹set_node()å‡½æ•° 
+  start.set_node(nstart);// start ç§»åŠ¨åˆ° nstart 
+  finish.set_node(nfinish);// finish ç§»åŠ¨åˆ° nfinish 
+  start.cur = start.first;// ç¡®å®šstartçš„cur 
+  finish.cur = finish.first + num_elements % buffer_size(); // ç¡®å®šfinishçš„cur   %æ˜¯æ±‚ä½™ï¼ï¼ï¼ï¼ï¼ï¼
 }
 
 // This is only used as a cleanup function in catch clauses.
-// Õâ½öÓÃ×÷catch×Ó¾äÖĞµÄÇåÀíº¯Êı¡£(try()...catch())
+// è¿™ä»…ç”¨ä½œcatchå­å¥ä¸­çš„æ¸…ç†å‡½æ•°ã€‚(try()...catch())
 template <class T, class Alloc, size_t BufSize>
-void deque<T, Alloc, BufSize>::destroy_map_and_nodes() {                  // mapµÄÎö¹¹º¯Êı 
-  for (map_pointer cur = start.node; cur <= finish.node; ++cur)           // cur_node ÊÇÖ¸ÏòÃ¿Ò»¸öbuffer Í·²¿µÄÖ¸Õë¡£
+void deque<T, Alloc, BufSize>::destroy_map_and_nodes() {                  // mapçš„ææ„å‡½æ•° 
+  for (map_pointer cur = start.node; cur <= finish.node; ++cur)           // cur_node æ˜¯æŒ‡å‘æ¯ä¸€ä¸ªbuffer å¤´éƒ¨çš„æŒ‡é’ˆã€‚
     deallocate_node(*cur);
-  map_allocator::deallocate(map, map_size);                               // map ²»Ò»¶¨Îª start.node¡£
+  map_allocator::deallocate(map, map_size);                               // map ä¸ä¸€å®šä¸º start.nodeã€‚
 }
   
 
 template <class T, class Alloc, size_t BufSize>
 void deque<T, Alloc, BufSize>::fill_initialize(size_type n,
                                                const value_type& value) {
-  create_map_and_nodes(n);// µÃµ½ËùĞèµÄnodeÊı£¨²»Ò»¶¨µÈÓÚn£© 
+  create_map_and_nodes(n);// å¾—åˆ°æ‰€éœ€çš„nodeæ•°ï¼ˆä¸ä¸€å®šç­‰äºnï¼‰ 
   map_pointer cur;
   __STL_TRY {
     for (cur = start.node; cur < finish.node; ++cur)
@@ -905,7 +905,7 @@ void deque<T, Alloc, BufSize>::range_initialize(InputIterator first,
                                                 input_iterator_tag) {
   create_map_and_nodes(0);
   for ( ; first != last; ++first)
-    push_back(*first);      // ºó²å firstËùÖ¸µÄÖµ¡£ 
+    push_back(*first);      // åæ’ firstæ‰€æŒ‡çš„å€¼ã€‚ 
 }
 
 template <class T, class Alloc, size_t BufSize>
@@ -946,8 +946,8 @@ void deque<T, Alloc, BufSize>::push_front_aux(const value_type& t) {
   *(start.node - 1) = allocate_node();
   __STL_TRY {
     start.set_node(start.node - 1);
-    start.cur = start.last - 1;    // È·¶¨Î»ÖÃ
-    construct(start.cur, t_copy);   // ¸³Öµ
+    start.cur = start.last - 1;    // ç¡®å®šä½ç½®
+    construct(start.cur, t_copy);   // èµ‹å€¼
   }
 #     ifdef __STL_USE_EXCEPTIONS
   catch(...) {
@@ -975,7 +975,7 @@ void deque<T, Alloc, BufSize>:: pop_back_aux() {
 template <class T, class Alloc, size_t BufSize>
 void deque<T, Alloc, BufSize>::pop_front_aux() {
   destroy(start.cur);
-  deallocate_node(start.first);  // Îö¹¹Õâ¸önodeËùÔÚµÄbuffer
+  deallocate_node(start.first);  // ææ„è¿™ä¸ªnodeæ‰€åœ¨çš„buffer
   start.set_node(start.node + 1);
   start.cur = start.first;
 }      
@@ -984,15 +984,15 @@ void deque<T, Alloc, BufSize>::pop_front_aux() {
 
 template <class T, class Alloc, size_t BufSize>
 template <class InputIterator>
-void deque<T, Alloc, BufSize>::insert(iterator pos,    // insertº¯ÊıµÄÊµÏÖ£¬¹ØÓÚinput iterator 
+void deque<T, Alloc, BufSize>::insert(iterator pos,    // insertå‡½æ•°çš„å®ç°ï¼Œå…³äºinput iterator 
                                       InputIterator first, InputIterator last,
                                       input_iterator_tag) {
-  copy(first, last, inserter(*this, pos));// ½«[first£¬last)ÒÆ¶¯µ½
+  copy(first, last, inserter(*this, pos));// å°†[firstï¼Œlast)ç§»åŠ¨åˆ°
 }
 
 template <class T, class Alloc, size_t BufSize>
 template <class ForwardIterator>
-void deque<T, Alloc, BufSize>::insert(iterator pos,     // insertº¯ÊıµÄÊµÏÖ£¬¹ØÓÚforward iterator 
+void deque<T, Alloc, BufSize>::insert(iterator pos,     // insertå‡½æ•°çš„å®ç°ï¼Œå…³äºforward iterator 
                                       ForwardIterator first,
                                       ForwardIterator last,
                                       forward_iterator_tag) {
@@ -1022,11 +1022,11 @@ void deque<T, Alloc, BufSize>::insert(iterator pos,     // insertº¯ÊıµÄÊµÏÖ£¬¹ØÓ
 
 template <class T, class Alloc, size_t BufSize>
 typename deque<T, Alloc, BufSize>::iterator
-deque<T, Alloc, BufSize>::insert_aux(iterator pos, const value_type& x) {// ×îÆÕÍ¨µÄinsert_aux(). 
-  difference_type index = pos - start; //¾àÀëstartµÄÖµ¡£ 
+deque<T, Alloc, BufSize>::insert_aux(iterator pos, const value_type& x) {// æœ€æ™®é€šçš„insert_aux(). 
+  difference_type index = pos - start; //è·ç¦»startçš„å€¼ã€‚ 
   value_type x_copy = x;
-  if (index < size() / 2) {// Èô²åÈëµãÔÚÇ°°ë²¿·Ö 
-    push_front(front());// ÔÚÍ·²¿²åÈë½Úµã 
+  if (index < size() / 2) {// è‹¥æ’å…¥ç‚¹åœ¨å‰åŠéƒ¨åˆ† 
+    push_front(front());// åœ¨å¤´éƒ¨æ’å…¥èŠ‚ç‚¹ 
     iterator front1 = start;
     ++front1;
     iterator front2 = front1;
@@ -1053,22 +1053,22 @@ template <class T, class Alloc, size_t BufSize>
 void deque<T, Alloc, BufSize>::insert_aux(iterator pos,
                                           size_type n, const value_type& x) {
   const difference_type elems_before = pos - start;
-  // µÃµ½²åÈëµÄÎ»ÖÃ¾àÀëstartµÄ¾àÀë¡ª¡ªelems_before¡£ 
+  // å¾—åˆ°æ’å…¥çš„ä½ç½®è·ç¦»startçš„è·ç¦»â€”â€”elems_beforeã€‚ 
   size_type length = size();
-  value_type x_copy = x; // xÎªconstÀàĞÍ£¬ÎŞ·¨ĞŞ¸Ä¡£ 
+  value_type x_copy = x; // xä¸ºconstç±»å‹ï¼Œæ— æ³•ä¿®æ”¹ã€‚ 
   
   if (elems_before < length / 2) {
-  // ²åÈëµÄÎ»ÖÃ¸üÇãÓÚÍ·½Úµã 
+  // æ’å…¥çš„ä½ç½®æ›´å€¾äºå¤´èŠ‚ç‚¹ 
     iterator new_start = reserve_elements_at_front(n);
     // 
     iterator old_start = start;
-    // old_start ÎªÀÏµÄstart 
+    // old_start ä¸ºè€çš„start 
     pos = start + elems_before;
     __STL_TRY {
       if (elems_before >= difference_type(n)) {
         iterator start_n = start + difference_type(n);
         uninitialized_copy(start, start_n, new_start);
-        start = new_start; // start¸üĞÂ¡£ 
+        start = new_start; // startæ›´æ–°ã€‚ 
         copy(start_n, pos, old_start);// 
         fill(pos - difference_type(n), pos, x_copy);
       }
@@ -1274,16 +1274,16 @@ void deque<T, Alloc, BufSize>::insert_aux(iterator pos,
 #endif /* __STL_MEMBER_TEMPLATES */
 
 template <class T, class Alloc, size_t BufSize>
-void deque<T, Alloc, BufSize>::new_elements_at_front(size_type new_elements) { //  ÔÚ front¼ÓÈëĞÂµÄÔªËØ£¨elems£© 
-  size_type new_nodes = (new_elements + buffer_size() - 1) / buffer_size();// ĞèÒªÔö¼ÓµÄnodeÊı (new_nodes)
-  reserve_map_at_front(new_nodes);// ÔÚmap(¿ØÖÆÖĞĞÄ)¼ÓÈënew_nodes¸önode¡£ 
+void deque<T, Alloc, BufSize>::new_elements_at_front(size_type new_elements) { //  åœ¨ frontåŠ å…¥æ–°çš„å…ƒç´ ï¼ˆelemsï¼‰ 
+  size_type new_nodes = (new_elements + buffer_size() - 1) / buffer_size();// éœ€è¦å¢åŠ çš„nodeæ•° (new_nodes)
+  reserve_map_at_front(new_nodes);// åœ¨map(æ§åˆ¶ä¸­å¿ƒ)åŠ å…¥new_nodesä¸ªnodeã€‚ 
   size_type i;
   __STL_TRY {
     for (i = 1; i <= new_nodes; ++i)
-      *(start.node - i) = allocate_node(); // ·ÖÅäÄÚ´æ¸øĞÂµÄ node 
+      *(start.node - i) = allocate_node(); // åˆ†é…å†…å­˜ç»™æ–°çš„ node 
   }
 #       ifdef __STL_USE_EXCEPTIONS
-  catch(...) {  // debug£¬·ÀÖ¹³ö´í 
+  catch(...) {  // debugï¼Œé˜²æ­¢å‡ºé”™ 
     for (size_type j = 1; j < i; ++j)
       deallocate_node(*(start.node - j));      
     throw;
@@ -1292,7 +1292,7 @@ void deque<T, Alloc, BufSize>::new_elements_at_front(size_type new_elements) { /
 }
 
 template <class T, class Alloc, size_t BufSize>
-void deque<T, Alloc, BufSize>::new_elements_at_back(size_type new_elements) {//ÔÚback¼ÓÈëĞÂµÄÔªËØ£¨elems£©£¬²½ÖèºÍnew_elements_at_front()ÀàËÆ¡£ 
+void deque<T, Alloc, BufSize>::new_elements_at_back(size_type new_elements) {//åœ¨backåŠ å…¥æ–°çš„å…ƒç´ ï¼ˆelemsï¼‰ï¼Œæ­¥éª¤å’Œnew_elements_at_front()ç±»ä¼¼ã€‚ 
   size_type new_nodes = (new_elements + buffer_size() - 1) / buffer_size();
   reserve_map_at_back(new_nodes);
   size_type i;
@@ -1309,15 +1309,15 @@ void deque<T, Alloc, BufSize>::new_elements_at_back(size_type new_elements) {//Ô
 #       endif /* __STL_USE_EXCEPTIONS */
 }
 
-// ¸öÈË¸Ğ¾õÕâ¸öº¯ÊıµÄ³öÏÖ¾ÍÊÇÎªÁËdebug 
+// ä¸ªäººæ„Ÿè§‰è¿™ä¸ªå‡½æ•°çš„å‡ºç°å°±æ˜¯ä¸ºäº†debug 
 template <class T, class Alloc, size_t BufSize>
-void deque<T, Alloc, BufSize>::destroy_nodes_at_front(iterator before_start) {// deallocate before_start Óë startÖ®¼äµÄ node 
+void deque<T, Alloc, BufSize>::destroy_nodes_at_front(iterator before_start) {// deallocate before_start ä¸ startä¹‹é—´çš„ node 
   for (map_pointer n = before_start.node; n < start.node; ++n)
     deallocate_node(*n);
 }
 
 template <class T, class Alloc, size_t BufSize>
-void deque<T, Alloc, BufSize>::destroy_nodes_at_back(iterator after_finish) { // deallocate finish Óë after_finish Ö®¼äµÄnode 
+void deque<T, Alloc, BufSize>::destroy_nodes_at_back(iterator after_finish) { // deallocate finish ä¸ after_finish ä¹‹é—´çš„node 
   for (map_pointer n = after_finish.node; n > finish.node; --n)
     deallocate_node(*n);
 }
@@ -1329,7 +1329,7 @@ void deque<T, Alloc, BufSize>::reallocate_map(size_type nodes_to_add,
   size_type new_num_nodes = old_num_nodes + nodes_to_add;
 
   map_pointer new_nstart;
-  if (map_size > 2 * new_num_nodes) {   // Èç¹ûmap_size > 2±¶new_num_nodes£¬ÄÇÃ´¶ÔÔ­ÓĞµÄmap½øĞĞµ÷Õû£¨¾¡Á¿·Åµ½mapµÄÕıÖĞ¼ä£©
+  if (map_size > 2 * new_num_nodes) {   // å¦‚æœmap_size > 2å€new_num_nodesï¼Œé‚£ä¹ˆå¯¹åŸæœ‰çš„mapè¿›è¡Œè°ƒæ•´ï¼ˆå°½é‡æ”¾åˆ°mapçš„æ­£ä¸­é—´ï¼‰
     new_nstart = map + (map_size - new_num_nodes) / 2 
                      + (add_at_front ? nodes_to_add : 0);
     if (new_nstart < start.node)
@@ -1337,7 +1337,7 @@ void deque<T, Alloc, BufSize>::reallocate_map(size_type nodes_to_add,
     else
       copy_backward(start.node, finish.node + 1, new_nstart + old_num_nodes);
   }
-  else {                               // ·ñÔòÖØĞÂÕÒÒ»¿éÄÚ´æ´´½¨ĞÂµÄmap£¬
+  else {                               // å¦åˆ™é‡æ–°æ‰¾ä¸€å—å†…å­˜åˆ›å»ºæ–°çš„mapï¼Œ
     size_type new_map_size = map_size + max(map_size, nodes_to_add) + 2;
 
     map_pointer new_map = map_allocator::allocate(new_map_size);
@@ -1350,8 +1350,8 @@ void deque<T, Alloc, BufSize>::reallocate_map(size_type nodes_to_add,
     map_size = new_map_size;
   }
 
-  start.set_node(new_nstart);// È·¶¨startµü´úÆ÷µÄÎ»ÖÃ 
-  finish.set_node(new_nstart + old_num_nodes - 1);// È·¶¨finishµü´úÆ÷µÄÎ»ÖÃ
+  start.set_node(new_nstart);// ç¡®å®šstartè¿­ä»£å™¨çš„ä½ç½® 
+  finish.set_node(new_nstart + old_num_nodes - 1);// ç¡®å®šfinishè¿­ä»£å™¨çš„ä½ç½®
 }
 
 
