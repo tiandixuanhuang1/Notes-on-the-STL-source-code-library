@@ -30,8 +30,8 @@
 
 
 /*
-1£¬µ±³ÉÔ±º¯ÊıµÄ const ºÍ non-const °æ±¾Í¬Ê±´æÔÚÊ±£¬const object Ö»»á£¨Ö»ÄÜ£©µ÷ÓÃ const °æ±¾
-   non-const object Ö»»á£¨Ö»ÄÜ£©µ÷ÓÃ non-const °æ±¾ 
+1ï¼Œå½“æˆå‘˜å‡½æ•°çš„ const å’Œ non-const ç‰ˆæœ¬åŒæ—¶å­˜åœ¨æ—¶ï¼Œconst object åªä¼šï¼ˆåªèƒ½ï¼‰è°ƒç”¨ const ç‰ˆæœ¬
+   non-const object åªä¼šï¼ˆåªèƒ½ï¼‰è°ƒç”¨ non-const ç‰ˆæœ¬ 
 */
 #ifndef __SGI_STL_INTERNAL_VECTOR_H
 #define __SGI_STL_INTERNAL_VECTOR_H
@@ -66,29 +66,29 @@ public:
 #endif /* __STL_CLASS_PARTIAL_SPECIALIZATION */
 protected:
   typedef simple_alloc<value_type, Alloc> data_allocator;
-                                                             // Èı¸ùµü´úÆ÷£¬ ÈıÕß´ÎĞò¹ØÏµÎª [start, ...., )finish, ...., )end_of_storage 
-  iterator start;                                            //startÖ¸Ïòµ±Ç°´æ´¢Í·½Úµã
-  iterator finish;                                           //finishÖ¸Ïòµ±Ç°´æ´¢µÄÎ²½ÚµãµÄÏÂÒ»¸ö½Úµã  
-  iterator end_of_storage;                                   //end_of_storageÖ¸ÏòÏÖ·ÖÅä´æ´¢´óĞ¡µÄ½ÚµãµÄÏÂÒ»¸ö½Úµã
+                                                             // ä¸‰æ ¹è¿­ä»£å™¨ï¼Œ ä¸‰è€…æ¬¡åºå…³ç³»ä¸º [start, ...., )finish, ...., )end_of_storage 
+  iterator start;                                            //startæŒ‡å‘å½“å‰å­˜å‚¨å¤´èŠ‚ç‚¹
+  iterator finish;                                           //finishæŒ‡å‘å½“å‰å­˜å‚¨çš„å°¾èŠ‚ç‚¹çš„ä¸‹ä¸€ä¸ªèŠ‚ç‚¹  
+  iterator end_of_storage;                                   //end_of_storageæŒ‡å‘ç°åˆ†é…å­˜å‚¨å¤§å°çš„èŠ‚ç‚¹çš„ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
   
-  void insert_aux(iterator position, const T& x);            //                                                                                                                   //insert_aux£¿£¿ 
+  void insert_aux(iterator position, const T& x);            //                                                                                                                   //insert_auxï¼Ÿï¼Ÿ 
   
-  void deallocate() {                                        //É¾³ı vector 
+  void deallocate() {                                        //åˆ é™¤ vector 
     if (start) data_allocator::deallocate(start, end_of_storage - start);                                                                                                         // deallocate() ?? 
-    // start ·Ç¿Õ£¬±íÊ¾vector·Ç¿Õ¡£ 
+    // start éç©ºï¼Œè¡¨ç¤ºvectoréç©ºã€‚ 
   }
 
-  void fill_initialize(size_type n, const T& value) {         // ³õÊ¼»¯vector£¬n Îªn¸öÔªËØ£¬ÇÒfinish ºÍ end_of_storage Ö¸ÏòÍ¬Ò»¸ö½Úµã¡£ 
+  void fill_initialize(size_type n, const T& value) {         // åˆå§‹åŒ–vectorï¼Œn ä¸ºnä¸ªå…ƒç´ ï¼Œä¸”finish å’Œ end_of_storage æŒ‡å‘åŒä¸€ä¸ªèŠ‚ç‚¹ã€‚ 
     start = allocate_and_fill(n, value);
     finish = start + n;
     end_of_storage = finish;
   }
 public:
-  iterator begin() { return start; }                        // ·µ»Østartµü´úÆ÷ 
-  const_iterator begin() const { return start; }            // ·µ»Ø start ³£µü´úÆ÷  const_itertor =  const value_type*
-  iterator end() { return finish; }                         // ·µ»Ø finish µü´úÆ÷ 
-  const_iterator end() const { return finish; }             // ·µ»Ø finish ³£µü´úÆ÷  const_itertor =  const value_type*
-  reverse_iterator rbegin() { return reverse_iterator(end()); } // ÒÔÏÂÓëÉÏÃæÀàËÆ 
+  iterator begin() { return start; }                        // è¿”å›startè¿­ä»£å™¨ 
+  const_iterator begin() const { return start; }            // è¿”å› start å¸¸è¿­ä»£å™¨  const_itertor =  const value_type*
+  iterator end() { return finish; }                         // è¿”å› finish è¿­ä»£å™¨ 
+  const_iterator end() const { return finish; }             // è¿”å› finish å¸¸è¿­ä»£å™¨  const_itertor =  const value_type*
+  reverse_iterator rbegin() { return reverse_iterator(end()); } // ä»¥ä¸‹ä¸ä¸Šé¢ç±»ä¼¼ 
   const_reverse_iterator rbegin() const { 
     return const_reverse_iterator(end()); 
   }
@@ -96,35 +96,35 @@ public:
   const_reverse_iterator rend() const { 
     return const_reverse_iterator(begin()); 
   }
-  size_type size() const { return size_type(end() - begin()); } // ·µ»Ø vector µÄÔªËØ¶àÉÙ£¬size_type() ÎªÇ¿ÖÆ×ª»»¡£ 
-  size_type max_size() const { return size_type(-1) / sizeof(T); } // vectorÀíÂÛÉÏÄÜ´æ´¢µÄÔªËØ¶àÉÙ  £¨×î´ó´óĞ¡£© 
-  size_type capacity() const { return size_type(end_of_storage - begin()); } // vector ÏÖÄÜ´æ´¢µÄ×ÜÔªËØ¸öÊı£¨ÈİÁ¿£© 
-  bool empty() const { return begin() == end(); }               // ÅĞ¶Ï vector ÊÇ·ñÎª¿Õ 
-  reference operator[](size_type n) { return *(begin() + n); }  // ·µ»ØµÚ n ¸öÔªËØµÄÖµ  reference = value_type& 
-  const_reference operator[](size_type n) const { return *(begin() + n); } //  ·µ»ØµÚ n ¸öÔªËØµÄÖµ  const_reference = const value_type&
+  size_type size() const { return size_type(end() - begin()); } // è¿”å› vector çš„å…ƒç´ å¤šå°‘ï¼Œsize_type() ä¸ºå¼ºåˆ¶è½¬æ¢ã€‚ 
+  size_type max_size() const { return size_type(-1) / sizeof(T); } // vectorç†è®ºä¸Šèƒ½å­˜å‚¨çš„å…ƒç´ å¤šå°‘  ï¼ˆæœ€å¤§å¤§å°ï¼‰ 
+  size_type capacity() const { return size_type(end_of_storage - begin()); } // vector ç°èƒ½å­˜å‚¨çš„æ€»å…ƒç´ ä¸ªæ•°ï¼ˆå®¹é‡ï¼‰ 
+  bool empty() const { return begin() == end(); }               // åˆ¤æ–­ vector æ˜¯å¦ä¸ºç©º 
+  reference operator[](size_type n) { return *(begin() + n); }  // è¿”å›ç¬¬ n ä¸ªå…ƒç´ çš„å€¼  reference = value_type& 
+  const_reference operator[](size_type n) const { return *(begin() + n); } //  è¿”å›ç¬¬ n ä¸ªå…ƒç´ çš„å€¼  const_reference = const value_type&
 
-																		// ÒÔÏÂÎª¹¹Ôìº¯Êı 
-  vector() : start(0), finish(0), end_of_storage(0) {}                  // ×îÔ­Ê¼µÄ°æ±¾ 
-  vector(size_type n, const T& value) { fill_initialize(n, value); }    // ¹¹Ôì size_typeÀàĞÍµÄ n ¸öÎªvalueµÄÊıÖµµÄ vector 
-  vector(int n, const T& value) { fill_initialize(n, value); }          // ¹¹Ôì int ĞÍ n¸övalueÊıÖµµÄ vector 
-  vector(long n, const T& value) { fill_initialize(n, value); }         // ¹¹Ôì long ĞÍ n¸ö value ÊıÖµµÄ vector 
-  explicit vector(size_type n) { fill_initialize(n, T()); }             // ÎŞ·¨ÒşÊ½×ª»»µÄ¹¹Ôìº¯Êı
+																		// ä»¥ä¸‹ä¸ºæ„é€ å‡½æ•° 
+  vector() : start(0), finish(0), end_of_storage(0) {}                  // æœ€åŸå§‹çš„ç‰ˆæœ¬ 
+  vector(size_type n, const T& value) { fill_initialize(n, value); }    // æ„é€  size_typeç±»å‹çš„ n ä¸ªä¸ºvalueçš„æ•°å€¼çš„ vector 
+  vector(int n, const T& value) { fill_initialize(n, value); }          // æ„é€  int å‹ nä¸ªvalueæ•°å€¼çš„ vector 
+  vector(long n, const T& value) { fill_initialize(n, value); }         // æ„é€  long å‹ nä¸ª value æ•°å€¼çš„ vector 
+  explicit vector(size_type n) { fill_initialize(n, T()); }             // æ— æ³•éšå¼è½¬æ¢çš„æ„é€ å‡½æ•°
   																		// end ctor 
 
-  vector(const vector<T, Alloc>& x) {                                   // ÒÔ¹¹ÔìºÃµÄvector x À´³õÊ¼»¯±¾ vector                                                                       // allocate_and_copy £¿£¿ 
+  vector(const vector<T, Alloc>& x) {                                   // ä»¥æ„é€ å¥½çš„vector x æ¥åˆå§‹åŒ–æœ¬ vector                                                                       // allocate_and_copy ï¼Ÿï¼Ÿ 
     start = allocate_and_copy(x.end() - x.begin(), x.begin(), x.end());
     finish = start + (x.end() - x.begin());
     end_of_storage = finish;
   }
 #ifdef __STL_MEMBER_TEMPLATES
-  template <class InputIterator>                                        // ¹¹Ôìº¯Êı £¨input iterator£© 
+  template <class InputIterator>                                        // æ„é€ å‡½æ•° ï¼ˆinput iteratorï¼‰ 
   vector(InputIterator first, InputIterator last) :                     // [first, last)
     start(0), finish(0), end_of_storage(0)
   {
     range_initialize(first, last, iterator_category(first));                                                                                                                          // range_initialize() 
   }
 #else /* __STL_MEMBER_TEMPLATES */
-  vector(const_iterator first, const_iterator last) {                   // ¹¹Ôìº¯Êı£¨const iterator£© 
+  vector(const_iterator first, const_iterator last) {                   // æ„é€ å‡½æ•°ï¼ˆconst iteratorï¼‰ 
     size_type n = 0;
     distance(first, last, n);
     start = allocate_and_copy(n, first, last);
@@ -132,15 +132,15 @@ public:
     end_of_storage = finish;
   }
 #endif /* __STL_MEMBER_TEMPLATES */
-  ~vector() {                                                           // Îö¹¹º¯Êı 
+  ~vector() {                                                           // ææ„å‡½æ•° 
     destroy(start, finish);
     deallocate();
   }
-  vector<T, Alloc>& operator=(const vector<T, Alloc>& x);               // ¸³Öµº¯Êı£¬½« x ¸³Öµ¸ø±¾ vector 
+  vector<T, Alloc>& operator=(const vector<T, Alloc>& x);               // èµ‹å€¼å‡½æ•°ï¼Œå°† x èµ‹å€¼ç»™æœ¬ vector 
    
-  void reserve(size_type n) {                                           // ½« vector µÄÈİÁ¿Ôö³¤µ½ n £¨nÓ¦¸Ã´óÓÚcapacity()£©
-  	// ¼ÇÂ¼ old_size£¬´´½¨ĞÂµÄ vector²¢½«ÀÏµÄ vector µÄÖµ¸³Öµµ½ĞÂµÄvectorÉÏ¡£·µ»ØÍ·½ÚµãµÄµü´úÆ÷.
-	// É¾³ıÀÏµÄ vector
+  void reserve(size_type n) {                                           // å°† vector çš„å®¹é‡å¢é•¿åˆ° n ï¼ˆnåº”è¯¥å¤§äºcapacity()ï¼‰
+  	// è®°å½• old_sizeï¼Œåˆ›å»ºæ–°çš„ vectorå¹¶å°†è€çš„ vector çš„å€¼èµ‹å€¼åˆ°æ–°çš„vectorä¸Šã€‚è¿”å›å¤´èŠ‚ç‚¹çš„è¿­ä»£å™¨.
+	// åˆ é™¤è€çš„ vector
 	// start = tmp; finish = start + old_size; end_of_storage = start + n; 
     if (capacity() < n) {
       const size_type old_size = size();
@@ -153,11 +153,11 @@ public:
     }
   	}
   
-  reference front() { return *begin(); }                   // µÃµ½Ö¸ÏòÍ·½ÚµãµÄÖµ 
-  const_reference front() const { return *begin(); }       //  Õë¶Ô const object µÄ°æ±¾ 
-  reference back() { return *(end() - 1); }                // ·µ»Ø×îºóÒ»¸ö½áµãµÄÊıÖµ 
-  const_reference back() const { return *(end() - 1); }    // Õë¶Ô const object µÄ°æ±¾ 
-  void push_back(const T& x) {                             // ÔÚvectorÄ©Î²¼ÓÈëÖµÎª x µÄ½Úµã 
+  reference front() { return *begin(); }                   // å¾—åˆ°æŒ‡å‘å¤´èŠ‚ç‚¹çš„å€¼ 
+  const_reference front() const { return *begin(); }       //  é’ˆå¯¹ const object çš„ç‰ˆæœ¬ 
+  reference back() { return *(end() - 1); }                // è¿”å›æœ€åä¸€ä¸ªç»“ç‚¹çš„æ•°å€¼ 
+  const_reference back() const { return *(end() - 1); }    // é’ˆå¯¹ const object çš„ç‰ˆæœ¬ 
+  void push_back(const T& x) {                             // åœ¨vectoræœ«å°¾åŠ å…¥å€¼ä¸º x çš„èŠ‚ç‚¹ 
     if (finish != end_of_storage) {
       construct(finish, x);
       ++finish;
@@ -165,80 +165,80 @@ public:
     else
       insert_aux(end(), x);
   }
-  void swap(vector<T, Alloc>& x) {                        // ½«±¾ vector ºÍ x »¥»»                                                                                                  //__STD::swap() 
-	__STD::swap(start, x.start);                           // ÓÉÓÚÒ»¸ö vector ÓÉÈı¸ù iterator ¹¹³É£¬ËùÒÔÖ»Òª½»»»Á½¸övectorµÄiterator£¬¾ÍÎª½»»»ÁËÁ½¸ö vector 
+  void swap(vector<T, Alloc>& x) {                        // å°†æœ¬ vector å’Œ x äº’æ¢                                                                                                  //__STD::swap() 
+	__STD::swap(start, x.start);                           // ç”±äºä¸€ä¸ª vector ç”±ä¸‰æ ¹ iterator æ„æˆï¼Œæ‰€ä»¥åªè¦äº¤æ¢ä¸¤ä¸ªvectorçš„iteratorï¼Œå°±ä¸ºäº¤æ¢äº†ä¸¤ä¸ª vector 
     __STD::swap(finish, x.finish);
     __STD::swap(end_of_storage, x.end_of_storage);
   }
   
-  iterator insert(iterator position, const T& x) {         // ÔÚ position Î»ÖÃ²åÈëÖµÎª x µÄ½Úµã 
-    size_type n = position - begin();//¾àÀëÍ·½áµãµÄ¾àÀë 
+  iterator insert(iterator position, const T& x) {         // åœ¨ position ä½ç½®æ’å…¥å€¼ä¸º x çš„èŠ‚ç‚¹ 
+    size_type n = position - begin();//è·ç¦»å¤´ç»“ç‚¹çš„è·ç¦» 
     if (finish != end_of_storage && position == end()) {
-	// Èô vector Ã»ÓĞÂú(finish != end_of_storage) ÇÒ position Îª end()£¨=finish£©ÔòÖ±½Ó²åÔÚºóÃæ          
-	// ±¾ÈËÈÏÎª¿ÉÒÔµ÷ÓÃpush_back()º¯Êı£¬µ«ÊÇµ÷ÓÃpush_back£¬¿ÉÄÜÓÖÒªµ÷ÓÃinsert_aux£¬µ¼ÖÂĞ§ÂÊ½µµÍ
+	// è‹¥ vector æ²¡æœ‰æ»¡(finish != end_of_storage) ä¸” position ä¸º end()ï¼ˆ=finishï¼‰åˆ™ç›´æ¥æ’åœ¨åé¢          
+	// æœ¬äººè®¤ä¸ºå¯ä»¥è°ƒç”¨push_back()å‡½æ•°ï¼Œä½†æ˜¯è°ƒç”¨push_backï¼Œå¯èƒ½åˆè¦è°ƒç”¨insert_auxï¼Œå¯¼è‡´æ•ˆç‡é™ä½
       construct(finish, x);
       ++finish;
     }
     else
-    // ·ñÔòµ÷ÓÃ insert_aux()º¯Êı 
+    // å¦åˆ™è°ƒç”¨ insert_aux()å‡½æ•° 
       insert_aux(position, x);                                                                                                                                                       // insert_aux() 
     return begin() + n;
   }
   
-  iterator insert(iterator position) { return insert(position, T()); } // Îª²»´øÌØ¶¨ÊıÖµ°æ±¾£¬¿ÉÒÔ¿´³öÕâÀï²åÈëµÄÖµÎªÒ»¸öÁÙÊ±¶ÔÏó T() 
+  iterator insert(iterator position) { return insert(position, T()); } // ä¸ºä¸å¸¦ç‰¹å®šæ•°å€¼ç‰ˆæœ¬ï¼Œå¯ä»¥çœ‹å‡ºè¿™é‡Œæ’å…¥çš„å€¼ä¸ºä¸€ä¸ªä¸´æ—¶å¯¹è±¡ T() 
   
 #ifdef __STL_MEMBER_TEMPLATES
   template <class InputIterator>
-  void insert(iterator position, InputIterator first, InputIterator last) {  //µü´úÆ÷Îªinput iteratorÀàĞÍ£¬½«[first, last) ²åµ½Î»ÖÃ position                                          //range_insert() 
+  void insert(iterator position, InputIterator first, InputIterator last) {  //è¿­ä»£å™¨ä¸ºinput iteratorç±»å‹ï¼Œå°†[first, last) æ’åˆ°ä½ç½® position                                          //range_insert() 
     range_insert(position, first, last, iterator_category(first));
   }
 #else /* __STL_MEMBER_TEMPLATES */
-  void insert(iterator position,                                        // µü´úÆ÷Îª const_iterator °æ±¾£¬const_iterator = const value_type*                                            
+  void insert(iterator position,                                        // è¿­ä»£å™¨ä¸º const_iterator ç‰ˆæœ¬ï¼Œconst_iterator = const value_type*                                            
               const_iterator first, const_iterator last);
 #endif /* __STL_MEMBER_TEMPLATES */
 
-  void insert (iterator pos, size_type n, const T& x);                  // ÔÚposÎ»ÖÃ²åÈën¸öÖµÎªxµÄ½Úµã £¨nÎªsize_typeÀàĞÍ£© 
-  void insert (iterator pos, int n, const T& x) {                       // ÔÚposÎ»ÖÃ²åÈën¸öÖµÎªxµÄ½Úµã £¨nÎªintÀàĞÍ£©
-    insert(pos, (size_type) n, x);// Ç¿ÖÆ×ªÎªsize_typeÀàĞÍ 
+  void insert (iterator pos, size_type n, const T& x);                  // åœ¨posä½ç½®æ’å…¥nä¸ªå€¼ä¸ºxçš„èŠ‚ç‚¹ ï¼ˆnä¸ºsize_typeç±»å‹ï¼‰ 
+  void insert (iterator pos, int n, const T& x) {                       // åœ¨posä½ç½®æ’å…¥nä¸ªå€¼ä¸ºxçš„èŠ‚ç‚¹ ï¼ˆnä¸ºintç±»å‹ï¼‰
+    insert(pos, (size_type) n, x);// å¼ºåˆ¶è½¬ä¸ºsize_typeç±»å‹ 
   }
-  void insert (iterator pos, long n, const T& x) {                     // ÔÚposÎ»ÖÃ²åÈën¸öÖµÎªxµÄ½Úµã £¨nÎªlongÀàĞÍ£©
-    insert(pos, (size_type) n, x);// Ç¿ÖÆ×ªÎªsize_typeÀàĞÍ 
+  void insert (iterator pos, long n, const T& x) {                     // åœ¨posä½ç½®æ’å…¥nä¸ªå€¼ä¸ºxçš„èŠ‚ç‚¹ ï¼ˆnä¸ºlongç±»å‹ï¼‰
+    insert(pos, (size_type) n, x);// å¼ºåˆ¶è½¬ä¸ºsize_typeç±»å‹ 
   }
 
-  void pop_back() {                                                    // É¾È¥Î²½Úµã£¨finish£© 
+  void pop_back() {                                                    // åˆ å»å°¾èŠ‚ç‚¹ï¼ˆfinishï¼‰ 
     --finish;
-    destroy(finish);              //ÄÜ·ñÊ¹ÓÃÓï¾ä destroy(end());
+    destroy(finish);              //èƒ½å¦ä½¿ç”¨è¯­å¥ destroy(end());
   }
   
-  iterator erase(iterator position) {                                 // É¾È¥µü´úÆ÷ pos Ö¸ÏòµÄ½Úµã£¬ºËĞÄÎª copy() º¯Êı 
+  iterator erase(iterator position) {                                 // åˆ å»è¿­ä»£å™¨ pos æŒ‡å‘çš„èŠ‚ç‚¹ï¼Œæ ¸å¿ƒä¸º copy() å‡½æ•° 
     if (position + 1 != end())
-      copy(position + 1, finish, position);                                                                                                                                           // copy() º¯Êı 
+      copy(position + 1, finish, position);                                                                                                                                           // copy() å‡½æ•° 
     --finish;
     destroy(finish);
     return position;
   }
-  iterator erase(iterator first, iterator last) {                    // É¾È¥ [first, last)Ö®¼äµÄ½Úµã
-  	// ½«[last, finish) ¿½±´µ½ first Î»ÖÃ
-	// ½ÓÏÂÀ´É¾³ı finish Ö®ºóµÄ½Úµã
-	// ×îºó¸Ä±ä finish ËùÖ¸µÄ½Úµã 
+  iterator erase(iterator first, iterator last) {                    // åˆ å» [first, last)ä¹‹é—´çš„èŠ‚ç‚¹
+  	// å°†[last, finish) æ‹·è´åˆ° first ä½ç½®
+	// æ¥ä¸‹æ¥åˆ é™¤ finish ä¹‹åçš„èŠ‚ç‚¹
+	// æœ€åæ”¹å˜ finish æ‰€æŒ‡çš„èŠ‚ç‚¹ 
     iterator i = copy(last, finish, first);
     destroy(i, finish);
     finish = finish - (last - first);
     return first;
   }
-  void resize(size_type new_size, const T& x) {                     // ¶Ô vector ÖØĞÂÉèÖÃ´óĞ¡
-    // Èô new_size < size() ÔòÉ¾³ı¶àµÄ²¿·Ö
-	// ·ñÔò¼Ó new_size - size() ¸öÖµÎª x µÄ½Úµã 
+  void resize(size_type new_size, const T& x) {                     // å¯¹ vector é‡æ–°è®¾ç½®å¤§å°
+    // è‹¥ new_size < size() åˆ™åˆ é™¤å¤šçš„éƒ¨åˆ†
+	// å¦åˆ™åŠ  new_size - size() ä¸ªå€¼ä¸º x çš„èŠ‚ç‚¹ 
     if (new_size < size()) 
       erase(begin() + new_size, end());
     else
       insert(end(), new_size - size(), x);
   }
   void resize(size_type new_size) { resize(new_size, T()); } 
-  void clear() { erase(begin(), end()); }                        // Çå¿Õvector 
+  void clear() { erase(begin(), end()); }                        // æ¸…ç©ºvector 
 
 protected:
-  iterator allocate_and_fill(size_type n, const T& x) {           // ²Â²âÓ¦¸ÃÊÇ ¹¹Ôì´óĞ¡Îª n ÖµÈ«Îª x µÄ vector                                                                       //allocate_and_fill() 
+  iterator allocate_and_fill(size_type n, const T& x) {           // çŒœæµ‹åº”è¯¥æ˜¯ æ„é€ å¤§å°ä¸º n å€¼å…¨ä¸º x çš„ vector                                                                       //allocate_and_fill() 
     iterator result = data_allocator::allocate(n);
     __STL_TRY {
       uninitialized_fill_n(result, n, x);                                                                                                                                             // uninitialized_fill_n() 
@@ -248,7 +248,7 @@ protected:
   }
 
 #ifdef __STL_MEMBER_TEMPLATES
-  template <class ForwardIterator>                              // Õë¶Ô forward iterator 
+  template <class ForwardIterator>                              // é’ˆå¯¹ forward iterator 
   iterator allocate_and_copy(size_type n,                                                                                                                                              // allocate_and_copy()
                              ForwardIterator first, ForwardIterator last) {
     iterator result = data_allocator::allocate(n);
@@ -259,7 +259,7 @@ protected:
     __STL_UNWIND(data_allocator::deallocate(result, n));
   }
 #else /* __STL_MEMBER_TEMPLATES */
-  iterator allocate_and_copy(size_type n,                       // Õë¶Ô const_iterator °æ±¾ 
+  iterator allocate_and_copy(size_type n,                       // é’ˆå¯¹ const_iterator ç‰ˆæœ¬ 
                              const_iterator first, const_iterator last) {
     iterator result = data_allocator::allocate(n);
     __STL_TRY {
@@ -280,8 +280,8 @@ forward_iterator
 
 #ifdef __STL_MEMBER_TEMPLATES
   template <class InputIterator>
-  // Õâ¸öº¯ÊıºÍÏÂÃæµÄº¯ÊıÏà±È¸ü¼Ó»ù´¡¡£
-  void range_initialize(InputIterator first, InputIterator last,  // [first, last) Ö®¼äµÄ½ÚµãÒÀ´Î push_back µ½ vector£¬ Õë¶Ô input iterator °æ±¾ 
+  // è¿™ä¸ªå‡½æ•°å’Œä¸‹é¢çš„å‡½æ•°ç›¸æ¯”æ›´åŠ åŸºç¡€ã€‚
+  void range_initialize(InputIterator first, InputIterator last,  // [first, last) ä¹‹é—´çš„èŠ‚ç‚¹ä¾æ¬¡ push_back åˆ° vectorï¼Œ é’ˆå¯¹ input iterator ç‰ˆæœ¬ 
                         input_iterator_tag) {
     for ( ; first != last; ++first)
       push_back(*first);
@@ -289,27 +289,27 @@ forward_iterator
 
   // This function is only called by the constructor.  We have to worry 
   //  about resource leaks, but not about maintaining invariants.
-  // ´Ëº¯Êı½öÓÉ¹¹Ôìº¯Êıµ÷ÓÃ¡£ÎÒÃÇ±ØĞëµ£ĞÄ×ÊÔ´Ğ¹Â©£¬¶ø²»ÊÇÎ¬»¤²»±äÁ¿¡£
+  // æ­¤å‡½æ•°ä»…ç”±æ„é€ å‡½æ•°è°ƒç”¨ã€‚æˆ‘ä»¬å¿…é¡»æ‹…å¿ƒèµ„æºæ³„æ¼ï¼Œè€Œä¸æ˜¯ç»´æŠ¤ä¸å˜é‡ã€‚
   template <class ForwardIterator>
-  void range_initialize(ForwardIterator first, ForwardIterator last,    // *****¹¹Ôìº¯Êıµ÷ÓÃ£¬ Ê¹ÓÃ [first, last) ³õÊ¼»¯ vector¡£ £¨¸Ãº¯ÊıºÍÉÏÃæµÄº¯ÊıÊµÏÖ·½Ê½²»ÏàÍ¬£© 
+  void range_initialize(ForwardIterator first, ForwardIterator last,    // *****æ„é€ å‡½æ•°è°ƒç”¨ï¼Œ ä½¿ç”¨ [first, last) åˆå§‹åŒ– vectorã€‚ ï¼ˆè¯¥å‡½æ•°å’Œä¸Šé¢çš„å‡½æ•°å®ç°æ–¹å¼ä¸ç›¸åŒï¼‰ 
                         forward_iterator_tag) {
     size_type n = 0;
     distance(first, last, n);                                                                                                                                                    // distance()
-	//  ²Â²â£ºn = first - last 
+	//  çŒœæµ‹ï¼šn = first - last 
     start = allocate_and_copy(n, first, last);
-    // ·ÖÅä vector µÄÄÚ´æ 
+    // åˆ†é… vector çš„å†…å­˜ 
     finish = start + n;
-    // finishÖ¸ÏòµÄµü´úÆ÷ 
+    // finishæŒ‡å‘çš„è¿­ä»£å™¨ 
     end_of_storage = finish;
   }
 
   template <class InputIterator>
-  void range_insert(iterator pos,                                     //Õë¶Ô intput iterator £¬½« [first, last) µÄ½Úµã²åÈëµ½Î»ÖÃ pos  
+  void range_insert(iterator pos,                                     //é’ˆå¯¹ intput iterator ï¼Œå°† [first, last) çš„èŠ‚ç‚¹æ’å…¥åˆ°ä½ç½® pos  
                     InputIterator first, InputIterator last,
                     input_iterator_tag);
 
   template <class ForwardIterator>
-  void range_insert(iterator pos,                                     //Õë¶Ô forward iterator £¬½« [first, last) µÄ½Úµã²åÈëµ½Î»ÖÃ pos
+  void range_insert(iterator pos,                                     //é’ˆå¯¹ forward iterator ï¼Œå°† [first, last) çš„èŠ‚ç‚¹æ’å…¥åˆ°ä½ç½® pos
                     ForwardIterator first, ForwardIterator last,
                     forward_iterator_tag);
 
@@ -317,33 +317,33 @@ forward_iterator
 };
 
 template <class T, class Alloc>
-inline bool operator==(const vector<T, Alloc>& x, const vector<T, Alloc>& y) {   // ÅĞ¶ÏÁ½¸ö vector ÊÇ·ñÏàµÈ¡£ 
+inline bool operator==(const vector<T, Alloc>& x, const vector<T, Alloc>& y) {   // åˆ¤æ–­ä¸¤ä¸ª vector æ˜¯å¦ç›¸ç­‰ã€‚ 
   return x.size() == y.size() && equal(x.begin(), x.end(), y.begin());                                                                                                                                         // equal() 
-  // ÏàµÈµÄ¼¸¸öÖ¸±ê£¬1£¬size() 2£¬ ?????                     
+  // ç›¸ç­‰çš„å‡ ä¸ªæŒ‡æ ‡ï¼Œ1ï¼Œsize() 2ï¼Œ ?????                     
 }
 
 template <class T, class Alloc>
-inline bool operator<(const vector<T, Alloc>& x, const vector<T, Alloc>& y) {    // vector ±È´óĞ¡ 
-  return lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());                                                                                                             // ±È´óĞ¡µÄÌõ¼ş£¿£¿ 
+inline bool operator<(const vector<T, Alloc>& x, const vector<T, Alloc>& y) {    // vector æ¯”å¤§å° 
+  return lexicographical_compare(x.begin(), x.end(), y.begin(), y.end());                                                                                                             // æ¯”å¤§å°çš„æ¡ä»¶ï¼Ÿï¼Ÿ 
 }
 
 #ifdef __STL_FUNCTION_TMPL_PARTIAL_ORDER
 
 template <class T, class Alloc>
-inline void swap(vector<T, Alloc>& x, vector<T, Alloc>& y) { // ²Â²â x Óë y Á½¸övector½»»» 
+inline void swap(vector<T, Alloc>& x, vector<T, Alloc>& y) { // çŒœæµ‹ x ä¸ y ä¸¤ä¸ªvectoräº¤æ¢ 
   x.swap(y);
 }
 
 #endif /* __STL_FUNCTION_TMPL_PARTIAL_ORDER */
 
 template <class T, class Alloc>
-vector<T, Alloc>& vector<T, Alloc>::operator=(const vector<T, Alloc>& x) {   // ¸³Öµº¯Êı 
-  if (&x != this) {// ĞèÒª x ²»Îª±¾ vector 
+vector<T, Alloc>& vector<T, Alloc>::operator=(const vector<T, Alloc>& x) {   // èµ‹å€¼å‡½æ•° 
+  if (&x != this) {// éœ€è¦ x ä¸ä¸ºæœ¬ vector 
     if (x.size() > capacity()) {
-		// x µÄ´óĞ¡´óÓÚ vector µÄÈİÁ¿ size() = begin() - end() = start - finish 
-		// ´´½¨ĞÂµÄ vector, ·µ»ØĞÂµÄvector Í·½ÚµãµÄµü´úÆ÷ tmp 
-		// É¾³ıÔ­À´µÄ vector 
-		// Îö¹¹²¢½«Ç°vector µÄstartÉèÎª tmp 
+		// x çš„å¤§å°å¤§äº vector çš„å®¹é‡ size() = begin() - end() = start - finish 
+		// åˆ›å»ºæ–°çš„ vector, è¿”å›æ–°çš„vector å¤´èŠ‚ç‚¹çš„è¿­ä»£å™¨ tmp 
+		// åˆ é™¤åŸæ¥çš„ vector 
+		// ææ„å¹¶å°†å‰vector çš„startè®¾ä¸º tmp 
 		// end_of_storage = start + x.size() 
       iterator tmp = allocate_and_copy(x.end() - x.begin(),                                                                                                      //allocate_and_copy()
                                        x.begin(), x.end());
@@ -353,15 +353,15 @@ vector<T, Alloc>& vector<T, Alloc>::operator=(const vector<T, Alloc>& x) {   // 
       end_of_storage = start + (x.end() - x.begin());  
     }
     else if (size() >= x.size()) {
-    	// Èô vector µÄ size ´óÓÚ x.size()
-		// ½«[x.begin(), x.end()) ¿½±´µ½begin()£¬·µ»Øµü´úÆ÷ i 
-		// É¾³ı vector ÖĞ i µ½ finish Ö®¼äµÄ½Úµã 
+    	// è‹¥ vector çš„ size å¤§äº x.size()
+		// å°†[x.begin(), x.end()) æ‹·è´åˆ°begin()ï¼Œè¿”å›è¿­ä»£å™¨ i 
+		// åˆ é™¤ vector ä¸­ i åˆ° finish ä¹‹é—´çš„èŠ‚ç‚¹ 
       iterator i = copy(x.begin(), x.end(), begin());
       destroy(i, finish);
     }
     else {
     	// size() < x.size() <= capacity()
-		//  ½« x ¿½±´µ½±¾ vector 
+		//  å°† x æ‹·è´åˆ°æœ¬ vector 
 		// ??
       copy(x.begin(), x.begin() + size(), start);                                                                                                                   // copy()                          
       uninitialized_copy(x.begin() + size(), x.end(), finish);                                                                                                      // unintialized_copy()
@@ -372,30 +372,30 @@ vector<T, Alloc>& vector<T, Alloc>::operator=(const vector<T, Alloc>& x) {   // 
 }
 
 template <class T, class Alloc>
-void vector<T, Alloc>::insert_aux(iterator position, const T& x) {           // insert_aux »¹»á±»ÆäËûº¯Êıµ÷ÓÃ£¨push_back£© 
-  if (finish != end_of_storage) { // »¹ÓĞ±¸ÓÃ¿Õ¼ä 
-     // ±¸ÓÃ¿Õ¼äÆğÊ¼½¨¹¹Ò»¸öÔªËØ£¬²¢ÒÔvector×îºóÒ»¸öÔªËØµÄÖµÉèÎªÆä³õÖµ
+void vector<T, Alloc>::insert_aux(iterator position, const T& x) {           // insert_aux è¿˜ä¼šè¢«å…¶ä»–å‡½æ•°è°ƒç”¨ï¼ˆpush_backï¼‰ 
+  if (finish != end_of_storage) { // è¿˜æœ‰å¤‡ç”¨ç©ºé—´ 
+     // å¤‡ç”¨ç©ºé—´èµ·å§‹å»ºæ„ä¸€ä¸ªå…ƒç´ ï¼Œå¹¶ä»¥vectoræœ€åä¸€ä¸ªå…ƒç´ çš„å€¼è®¾ä¸ºå…¶åˆå€¼
     construct(finish, *(finish - 1)); 
-    ++finish;  //µ÷ÕûË®Î» 
+    ++finish;  //è°ƒæ•´æ°´ä½ 
     T x_copy = x;
     copy_backward(position, finish - 2, finish - 1);
     *position = x_copy;
   }
-  else { // ÎŞ±¸ÓÃ¿Õ¼ä 
+  else { // æ— å¤‡ç”¨ç©ºé—´ 
     const size_type old_size = size();
     const size_type len = old_size != 0 ? 2 * old_size : 1;
-    // ÒÔÉÏ·ÖÅäÔ­Ôò£ºÈôÔ­´óĞ¡Îª0£¬Ôò·ÖÅä1£»
-	// ÈôÔ­´óĞ¡²»Îª0£¬Ôò·ÖÅäÔ­´óĞ¡µÄÁ½±¶
-	// Ç°°ë¶ÎÓÃÀ´·ÅÖÃÔ­Êı¾İ £¬ºó°ë¶ÎÊı¾İÓÃÀ´·ÅÖÃĞÂÊı¾İ¡£
+    // ä»¥ä¸Šåˆ†é…åŸåˆ™ï¼šè‹¥åŸå¤§å°ä¸º0ï¼Œåˆ™åˆ†é…1ï¼›
+	// è‹¥åŸå¤§å°ä¸ä¸º0ï¼Œåˆ™åˆ†é…åŸå¤§å°çš„ä¸¤å€
+	// å‰åŠæ®µç”¨æ¥æ”¾ç½®åŸæ•°æ® ï¼ŒååŠæ®µæ•°æ®ç”¨æ¥æ”¾ç½®æ–°æ•°æ®ã€‚
 	 
     iterator new_start = data_allocator::allocate(len);
-    iterator new_finish = new_start;                      //ÕâÀï±¾ÈËÀí½âÎª³õÊ¼»¯ 
+    iterator new_finish = new_start;                      //è¿™é‡Œæœ¬äººç†è§£ä¸ºåˆå§‹åŒ– 
     __STL_TRY {
-      // ½«Ô­vectorµÄÄÚÈİ¿½±´µ½ĞÂµÄ vector 
+      // å°†åŸvectorçš„å†…å®¹æ‹·è´åˆ°æ–°çš„ vector 
       new_finish = uninitialized_copy(start, position, new_start);
-      construct(new_finish, x); // ÎªĞÂÔªËØÉèÖÃ³õÖµ 
-      ++new_finish; // µ÷ÕûË®Î» 
-      // ¿½±´°²²åµãÖ®ºóµÄÄÚÈİ£¨ÒòËüÒ²¿ÉÄÜ±» insert(p,x) ºô½Ğ£© 
+      construct(new_finish, x); // ä¸ºæ–°å…ƒç´ è®¾ç½®åˆå€¼ 
+      ++new_finish; // è°ƒæ•´æ°´ä½ 
+      // æ‹·è´å®‰æ’ç‚¹ä¹‹åçš„å†…å®¹ï¼ˆå› å®ƒä¹Ÿå¯èƒ½è¢« insert(p,x) å‘¼å«ï¼‰ 
       new_finish = uninitialized_copy(position, finish, new_finish);
     }
 
@@ -415,7 +415,7 @@ void vector<T, Alloc>::insert_aux(iterator position, const T& x) {           // 
 }
 
 template <class T, class Alloc>
-void vector<T, Alloc>::insert(iterator position, size_type n, const T& x) { // ÔÙposition Î»ÖÃ²åÈën¸öÖµÎªxµÄÔªËØ¡£
+void vector<T, Alloc>::insert(iterator position, size_type n, const T& x) { // å†position ä½ç½®æ’å…¥nä¸ªå€¼ä¸ºxçš„å…ƒç´ ã€‚
   if (n != 0) {
     if (size_type(end_of_storage - finish) >= n) {
       T x_copy = x;
@@ -428,7 +428,7 @@ void vector<T, Alloc>::insert(iterator position, size_type n, const T& x) { // Ô
         fill(position, position + n, x_copy);
       }
       else {
-        uninitialized_fill_n(finish, n - elems_after, x_copy);   // ´Ófinish¿ªÊ¼n¸öÔªËØÎªx_copy
+        uninitialized_fill_n(finish, n - elems_after, x_copy);   // ä»finishå¼€å§‹nä¸ªå…ƒç´ ä¸ºx_copy
         finish += n - elems_after;
         uninitialized_copy(position, old_finish, finish);
         finish += elems_after;
@@ -441,7 +441,7 @@ void vector<T, Alloc>::insert(iterator position, size_type n, const T& x) { // Ô
       iterator new_start = data_allocator::allocate(len);
       iterator new_finish = new_start;
       __STL_TRY {
-		                                                 // position ÊÇÔ­ VectorÖĞµÄ
+		                                                 // position æ˜¯åŸ Vectorä¸­çš„
         new_finish = uninitialized_copy(start, position, new_start);
         new_finish = uninitialized_fill_n(new_finish, n, x);
         new_finish = uninitialized_copy(position, finish, new_finish);
@@ -465,11 +465,11 @@ void vector<T, Alloc>::insert(iterator position, size_type n, const T& x) { // Ô
 #ifdef __STL_MEMBER_TEMPLATES
 
 template <class T, class Alloc> template <class InputIterator>
-void vector<T, Alloc>::range_insert(iterator pos,          // input iterator°æ±¾£¬½«[first, last) ²åÈëµ½ pos Î»ÖÃ¡£ 
+void vector<T, Alloc>::range_insert(iterator pos,          // input iteratorç‰ˆæœ¬ï¼Œå°†[first, last) æ’å…¥åˆ° pos ä½ç½®ã€‚ 
                                     InputIterator first, InputIterator last,
                                     input_iterator_tag) {
   for ( ; first != last; ++first) {
-    pos = insert(pos, *first);// ÔÚpos²åÈëÖµÎª *first µÄ½Úµã                                                                                                                           // ·µ»ØµÄµü´úÆ÷Ö¸ÏòÄÄ£¿£¿ 
+    pos = insert(pos, *first);// åœ¨posæ’å…¥å€¼ä¸º *first çš„èŠ‚ç‚¹                                                                                                                           // è¿”å›çš„è¿­ä»£å™¨æŒ‡å‘å“ªï¼Ÿï¼Ÿ 
     ++pos;
   }
 }
